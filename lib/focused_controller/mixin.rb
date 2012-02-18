@@ -12,7 +12,7 @@ module FocusedController
     end
 
     def action_name
-      self.class.name.demodulize.underscore.sub(/_controller$/, '')
+      self.class.name.demodulize.underscore
     end
 
     def method_for_action(name)
