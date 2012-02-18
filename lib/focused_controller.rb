@@ -1,4 +1,6 @@
 require 'focused_controller/version'
+require 'focused_controller/route'
+
 require 'active_support/concern'
 require 'active_support/core_ext/string/conversions'
 

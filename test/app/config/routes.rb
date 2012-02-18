@@ -1,13 +1,13 @@
 App::Application.routes.draw do
   # resources :posts
 
-  get    '/posts'          => proc { |env| PostsController::Index.call(env)   }, :as => :posts
-  post   '/posts'          => proc { |env| PostsController::Create.call(env)  }
-  get    '/posts/new'      => proc { |env| PostsController::New.call(env)     }, :as => :new_post
-  get    '/posts/:id'      => proc { |env| PostsController::Show.call(env)    }, :as => :post
-  get    '/posts/:id/edit' => proc { |env| PostsController::Edit.call(env)    }, :as => :edit_post
-  put    '/posts/:id'      => proc { |env| PostsController::Update.call(env)  }
-  delete '/posts/:id'      => proc { |env| PostsController::Destroy.call(env) }, :as => :destroy_post
+  get    '/posts'          => FocusedController::Route.new('PostsController::Index'), :as => :posts
+  post   '/posts'          => FocusedController::Route.new('PostsController::Create')
+  get    '/posts/new'      => FocusedController::Route.new('PostsController::New'), :as => :new_post
+  get    '/posts/:id'      => FocusedController::Route.new('PostsController::Show'), :as => :post
+  get    '/posts/:id/edit' => FocusedController::Route.new('PostsController::Edit'), :as => :edit_post
+  put    '/posts/:id'      => FocusedController::Route.new('PostsController::Update')
+  delete '/posts/:id'      => FocusedController::Route.new('PostsController::Destroy'), :as => :destroy_post
 
   # The priority is based upon order of creation:
   # first created -> highest priority.
