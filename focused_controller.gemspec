@@ -18,7 +18,12 @@ Gem::Specification.new do |s|
   s.executables   = `git ls-files -- bin/*`.split("\n").map{ |f| File.basename(f) }
   s.require_paths = ["lib"]
 
+  s.add_dependency 'activesupport', '~> 3.0'
+
   # specify any dependencies here; for example:
-  # s.add_development_dependency "rspec"
+  s.add_development_dependency 'minitest', '~> 2.11.2'
+  s.add_development_dependency 'capybara', '~> 1.1.2'
+  s.add_development_dependency 'capybara_minitest_spec', '~> 0.2.1'
+  s.add_development_dependency 'poltergeist', '~> 0.4.0'
   # s.add_runtime_dependency "rest-client"
 end
