@@ -1,13 +1,7 @@
 App::Application.routes.draw do
-  # resources :posts
-
-  get    '/posts'          => FocusedController::Route.new('PostsController::Index'), :as => :posts
-  post   '/posts'          => FocusedController::Route.new('PostsController::Create')
-  get    '/posts/new'      => FocusedController::Route.new('PostsController::New'), :as => :new_post
-  get    '/posts/:id'      => FocusedController::Route.new('PostsController::Show'), :as => :post
-  get    '/posts/:id/edit' => FocusedController::Route.new('PostsController::Edit'), :as => :edit_post
-  put    '/posts/:id'      => FocusedController::Route.new('PostsController::Update')
-  delete '/posts/:id'      => FocusedController::Route.new('PostsController::Destroy'), :as => :destroy_post
+  focused_controller_routes do
+    resources :posts
+  end
 
   # The priority is based upon order of creation:
   # first created -> highest priority.
