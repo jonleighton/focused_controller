@@ -3,35 +3,54 @@ class PostsController
   end
 
   class Index < Action
+    def posts
+      @posts ||= Post.all
+    end
+    helper_method :posts
+
     def run
-      @posts = Post.all
     end
   end
 
   class Show < Action
+    def post
+      @post ||= Post.find(params[:id])
+    end
+    helper_method :post
+
     def run
-      @post = Post.find(params[:id])
     end
   end
 
   class New < Action
+    def post
+      @post ||= Post.new
+    end
+    helper_method :post
+
     def run
-      @post = Post.new
     end
   end
 
   class Edit < Action
+    def post
+      @post ||= Post.find(params[:id])
+    end
+    helper_method :post
+
     def run
-      @post = Post.find(params[:id])
     end
   end
 
   class Create < Action
-    def run
-      @post = Post.new(params[:post])
+    def post
+      @post ||= Post.new(params[:post])
+    end
+    helper_method :post
 
-      if @post.save
-        redirect_to @post, notice: 'Post was successfully created.'
+    def run
+      if post.save
+        redirect_to post, notice: 'Post was successfully created.'
       else
         render action: "new"
       end
@@ -39,10 +58,14 @@ class PostsController
   end
 
   class Update < Action
+    def post
+      @post ||= Post.find(params[:id])
+    end
+    helper_method :post
+
     def run
-      @post = Post.find(params[:id])
-      if @post.update_attributes(params[:post])
-        redirect_to @post, notice: 'Post was successfully updated.'
+      if post.update_attributes(params[:post])
+        redirect_to post, notice: 'Post was successfully updated.'
       else
         render action: "edit"
       end
@@ -50,9 +73,12 @@ class PostsController
   end
 
   class Destroy < Action
+    def post
+      @post ||= Post.find(params[:id])
+    end
+
     def run
-      @post = Post.find(params[:id])
-      @post.destroy
+      post.destroy
       redirect_to posts_url
     end
   end

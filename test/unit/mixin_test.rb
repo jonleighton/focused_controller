@@ -2,7 +2,13 @@ require 'helper'
 
 module FocusedController
   module Test
-    class MixinTestController
+    class MixinTestBaseController
+      def view_assigns
+        {'some' => 'var'}
+      end
+    end
+
+    class MixinTestController < MixinTestBaseController
       include FocusedController::Mixin
 
       class << self
@@ -31,6 +37,15 @@ module FocusedController
 
       it "uses the run method for the action" do
         subject.method_for_action('whatever').must_equal 'run'
+      end
+
+      it "removes all view assigns by default" do
+        subject.view_assigns.must_equal({})
+      end
+
+      it "can be configured to allow view assigns" do
+        subject.class.allow_view_assigns = true
+        subject.view_assigns.must_equal({'some' => 'var'})
       end
     end
   end
