@@ -11,7 +11,7 @@ module FocusedController
     end
 
     def to_s
-      "#{name}#run"
+      "#{name}##{FocusedController.action_name}"
     end
   end
 end
