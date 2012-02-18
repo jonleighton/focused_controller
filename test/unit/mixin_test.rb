@@ -47,6 +47,10 @@ module FocusedController
         subject.class.allow_view_assigns = true
         subject.view_assigns.must_equal({'some' => 'var'})
       end
+
+      it "has a #run method by default" do
+        subject.run.must_equal nil
+      end
     end
   end
 end

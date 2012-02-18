@@ -7,47 +7,31 @@ class PostsController
       @posts ||= Post.all
     end
     helper_method :posts
-
-    def run
-    end
   end
 
-  class Show < Action
+  class Singular < Action
     def post
-      @post ||= Post.find(params[:id])
+      @post ||= begin
+        if params[:id]
+          Post.find(params[:id])
+        else
+          Post.new(params[:post])
+        end
+      end
     end
     helper_method :post
-
-    def run
-    end
   end
 
-  class New < Action
-    def post
-      @post ||= Post.new
-    end
-    helper_method :post
-
-    def run
-    end
+  class Show < Singular
   end
 
-  class Edit < Action
-    def post
-      @post ||= Post.find(params[:id])
-    end
-    helper_method :post
-
-    def run
-    end
+  class New < Singular
   end
 
-  class Create < Action
-    def post
-      @post ||= Post.new(params[:post])
-    end
-    helper_method :post
+  class Edit < Singular
+  end
 
+  class Create < Singular
     def run
       if post.save
         redirect_to post, notice: 'Post was successfully created.'
@@ -57,12 +41,7 @@ class PostsController
     end
   end
 
-  class Update < Action
-    def post
-      @post ||= Post.find(params[:id])
-    end
-    helper_method :post
-
+  class Update < Singular
     def run
       if post.update_attributes(params[:post])
         redirect_to post, notice: 'Post was successfully updated.'
@@ -72,11 +51,7 @@ class PostsController
     end
   end
 
-  class Destroy < Action
-    def post
-      @post ||= Post.find(params[:id])
-    end
-
+  class Destroy < Singular
     def run
       post.destroy
       redirect_to posts_url

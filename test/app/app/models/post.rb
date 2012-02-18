@@ -33,6 +33,7 @@ class Post
   end
 
   def attributes=(attrs)
+    return unless attrs
     attrs.each { |k, v| send("#{k}=", v) }
   end
 

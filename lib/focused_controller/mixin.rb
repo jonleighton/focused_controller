@@ -32,5 +32,8 @@ module FocusedController
         {}
       end
     end
+
+    def run
+    end
   end
 end
