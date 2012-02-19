@@ -2,6 +2,8 @@ require 'test_helper'
 
 class PostsController
   class TestCase < ActionController::TestCase
+    include FocusedController::FunctionalTestHelper
+
     setup do
       @post = Post.create(:title => 'Hello', :body => 'Omg')
     end
@@ -9,7 +11,7 @@ class PostsController
 
   class IndexTest < TestCase
     test "should get index" do
-      get :run
+      get
       assert_response :success
       assert_not_nil @controller.posts
     end
@@ -17,7 +19,7 @@ class PostsController
 
   class NewTest < TestCase
     test "should get new" do
-      get :run
+      get
       assert_response :success
     end
   end
@@ -25,7 +27,7 @@ class PostsController
   class CreateTest < TestCase
     test "should create post" do
       assert_difference('Post.count') do
-        post :run, post: @post.attributes
+        post post: @post.attributes
       end
 
       assert_redirected_to post_path(@controller.post)
@@ -34,21 +36,21 @@ class PostsController
 
   class ShowTest < TestCase
     test "should show post" do
-      get :run, id: @post
+      get id: @post
       assert_response :success
     end
   end
 
   class EditTest < TestCase
     test "should get edit" do
-      get :run, id: @post
+      get id: @post
       assert_response :success
     end
   end
 
   class UpdateTest < TestCase
     test "should update post" do
-      put :run, id: @post, post: @post.attributes
+      put id: @post, post: @post.attributes
       assert_redirected_to post_path(@controller.post)
     end
   end
@@ -56,7 +58,7 @@ class PostsController
   class DestroyTest < TestCase
     test "should destroy post" do
       assert_difference('Post.count', -1) do
-        delete :run, id: @post
+        delete id: @post
       end
 
       assert_redirected_to posts_path
