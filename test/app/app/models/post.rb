@@ -11,17 +11,31 @@ class Post
     private :posts
 
     def all
-      posts
+      posts.compact
     end
 
-    def create(post)
+    def create(attrs = {})
+      post = new(attrs)
+      post.save
+      post
+    end
+
+    def persist(post)
       id = posts.length
       posts << post
       id
     end
 
+    def unpersist(post)
+      posts[post.id] = nil
+    end
+
     def find(id)
       posts[id.to_i] or raise "not found"
+    end
+
+    def count
+      posts.compact.length
     end
   end
 
@@ -35,6 +49,10 @@ class Post
   def attributes=(attrs)
     return unless attrs
     attrs.each { |k, v| send("#{k}=", v) }
+  end
+
+  def attributes
+    { 'title' => title, 'body' => body }
   end
 
   def to_model
@@ -55,7 +73,7 @@ class Post
 
   def save
     unless persisted?
-      @id = self.class.create(self)
+      @id = self.class.persist(self)
     end
     true
   end
@@ -63,5 +81,10 @@ class Post
   def update_attributes(attrs)
     self.attributes = attrs
     save
+  end
+
+  def destroy
+    self.class.unpersist(self)
+    true
   end
 end

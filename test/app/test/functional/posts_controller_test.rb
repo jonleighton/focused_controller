@@ -1,49 +1,79 @@
 require 'test_helper'
 
-class PostsControllerTest < ActionController::TestCase
-  setup do
-    @post = posts(:one)
-  end
-
-  test "should get index" do
-    get :index
-    assert_response :success
-    assert_not_nil assigns(:posts)
-  end
-
-  test "should get new" do
-    get :new
-    assert_response :success
-  end
-
-  test "should create post" do
-    assert_difference('Post.count') do
-      post :create, post: @post.attributes
+class PostsController
+  class TestCase < ActionController::TestCase
+    setup do
+      @post = Post.create(:title => 'Hello', :body => 'Omg')
     end
-
-    assert_redirected_to post_path(assigns(:post))
   end
 
-  test "should show post" do
-    get :show, id: @post
-    assert_response :success
-  end
+  class IndexTest < TestCase
+    tests Index
 
-  test "should get edit" do
-    get :edit, id: @post
-    assert_response :success
-  end
-
-  test "should update post" do
-    put :update, id: @post, post: @post.attributes
-    assert_redirected_to post_path(assigns(:post))
-  end
-
-  test "should destroy post" do
-    assert_difference('Post.count', -1) do
-      delete :destroy, id: @post
+    test "should get index" do
+      get :run
+      assert_response :success
+      assert_not_nil @controller.posts
     end
+  end
 
-    assert_redirected_to posts_path
+  class NewTest < TestCase
+    tests New
+
+    test "should get new" do
+      get :run
+      assert_response :success
+    end
+  end
+
+  class CreateTest < TestCase
+    tests Create
+
+    test "should create post" do
+      assert_difference('Post.count') do
+        post :run, post: @post.attributes
+      end
+
+      assert_redirected_to post_path(@controller.post)
+    end
+  end
+
+  class ShowTest < TestCase
+    tests Show
+
+    test "should show post" do
+      get :run, id: @post
+      assert_response :success
+    end
+  end
+
+  class EditTest < TestCase
+    tests Edit
+
+    test "should get edit" do
+      get :run, id: @post
+      assert_response :success
+    end
+  end
+
+  class UpdateTest < TestCase
+    tests Update
+
+    test "should update post" do
+      put :run, id: @post, post: @post.attributes
+      assert_redirected_to post_path(@controller.post)
+    end
+  end
+
+  class DestroyTest < TestCase
+    tests Destroy
+
+    test "should destroy post" do
+      assert_difference('Post.count', -1) do
+        delete :run, id: @post
+      end
+
+      assert_redirected_to posts_path
+    end
   end
 end
