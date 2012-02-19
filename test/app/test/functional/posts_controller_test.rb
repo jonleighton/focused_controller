@@ -8,8 +8,6 @@ class PostsController
   end
 
   class IndexTest < TestCase
-    tests Index
-
     test "should get index" do
       get :run
       assert_response :success
@@ -18,8 +16,6 @@ class PostsController
   end
 
   class NewTest < TestCase
-    tests New
-
     test "should get new" do
       get :run
       assert_response :success
@@ -27,8 +23,6 @@ class PostsController
   end
 
   class CreateTest < TestCase
-    tests Create
-
     test "should create post" do
       assert_difference('Post.count') do
         post :run, post: @post.attributes
@@ -39,8 +33,6 @@ class PostsController
   end
 
   class ShowTest < TestCase
-    tests Show
-
     test "should show post" do
       get :run, id: @post
       assert_response :success
@@ -48,8 +40,6 @@ class PostsController
   end
 
   class EditTest < TestCase
-    tests Edit
-
     test "should get edit" do
       get :run, id: @post
       assert_response :success
@@ -57,8 +47,6 @@ class PostsController
   end
 
   class UpdateTest < TestCase
-    tests Update
-
     test "should update post" do
       put :run, id: @post, post: @post.attributes
       assert_redirected_to post_path(@controller.post)
@@ -66,8 +54,6 @@ class PostsController
   end
 
   class DestroyTest < TestCase
-    tests Destroy
-
     test "should destroy post" do
       assert_difference('Post.count', -1) do
         delete :run, id: @post
