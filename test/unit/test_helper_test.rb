@@ -9,6 +9,12 @@ module FocusedController
       end
 
       class Index < Action
+        def run
+          if params[:omg]
+            "omg"
+          end
+        end
+
         def self._routes
           OpenStruct.new(
             :named_routes => OpenStruct.new(
@@ -128,6 +134,10 @@ module FocusedController
         other.respond_to?(:foo_path).must_equal false
         other.respond_to?(:bar_path).must_equal true
         other.bar_path.must_equal '/bar'
+      end
+
+      it "has a #req method that sets params and calls the controller's #run" do
+        subject.req(:omg => true).must_equal 'omg'
       end
     end
   end

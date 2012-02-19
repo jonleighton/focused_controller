@@ -53,6 +53,11 @@ module FocusedController
       @response ||= ActionDispatch::TestResponse.new
     end
 
+    def req(params = {})
+      controller.params = params
+      controller.run
+    end
+
     def assert_template(template, message = nil)
       assert_equal template.to_s, controller._render_options[:template], message
     end
@@ -77,7 +82,6 @@ module FocusedController
     def respond_to?(method_name)
       unless defined?(@_routes_included) && @_routes_included
         self.class.include_routes
-        self.class.send :undef_method, :method_missing
         @_routes_included = true
       end
 
