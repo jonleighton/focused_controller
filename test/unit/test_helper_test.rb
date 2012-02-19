@@ -142,10 +142,6 @@ module FocusedController
         other.bar_path.must_equal '/bar'
       end
 
-      it "has a #req method that sets params and calls the controller's #run" do
-        subject.req(:omg => true).must_equal 'omg'
-      end
-
       it 'supports session' do
         subject.req(:set_session => true)
         subject.session[:foo].must_equal 'omg'
@@ -163,6 +159,20 @@ module FocusedController
       it 'supports cookies' do
         subject.req(:set_cookie => true)
         subject.cookies[:foo].must_equal 'omg'
+      end
+
+      it "has a #req method that sets params and calls the controller's #run" do
+        subject.req(:omg => true).must_equal 'omg'
+      end
+
+      it 'supports setting session with #req' do
+        subject.req(nil, { :foo => 'bar' })
+        subject.session[:foo].must_equal 'bar'
+      end
+
+      it 'supports setting flash with #req' do
+        subject.req(nil, nil, { :foo => 'bar' })
+        subject.flash[:foo].must_equal 'bar'
       end
     end
   end

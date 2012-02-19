@@ -72,8 +72,10 @@ module FocusedController
       @response ||= TestResponse.new
     end
 
-    def req(params = {})
-      controller.params = params
+    def req(params = {}, session = {}, flash = {})
+      controller.params = params        if params
+      controller.session.update session if session
+      controller.flash.update flash     if flash
       controller.run
     end
 
