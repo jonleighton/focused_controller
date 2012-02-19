@@ -12,6 +12,12 @@ module FocusedController
         def run
           if params[:omg]
             "omg"
+          elsif params[:set_session]
+            session[:foo] = 'omg'
+          elsif params[:set_flash]
+            flash[:foo] = 'omg'
+          elsif params[:set_cookie]
+            cookies[:foo] = 'omg'
           end
         end
 
@@ -138,6 +144,25 @@ module FocusedController
 
       it "has a #req method that sets params and calls the controller's #run" do
         subject.req(:omg => true).must_equal 'omg'
+      end
+
+      it 'supports session' do
+        subject.req(:set_session => true)
+        subject.session[:foo].must_equal 'omg'
+        subject.session['foo'].must_equal 'omg'
+      end
+
+      it 'supports flash' do
+        subject.req(:set_flash => true)
+        subject.flash[:foo].must_equal 'omg'
+
+        # This is consistent with the behaviour of standard rails functional tests
+        subject.flash['foo'].must_equal nil
+      end
+
+      it 'supports cookies' do
+        subject.req(:set_cookie => true)
+        subject.cookies[:foo].must_equal 'omg'
       end
     end
   end

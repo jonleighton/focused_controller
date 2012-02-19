@@ -2,6 +2,7 @@ require 'action_dispatch/testing/test_request'
 require 'action_dispatch/testing/test_response'
 require 'active_support/concern'
 require 'active_support/core_ext/class/attribute'
+require 'active_support/hash_with_indifferent_access'
 
 module FocusedController
   module TestHooks
@@ -11,6 +12,24 @@ module FocusedController
       _process_options(options)
       @_render_options = options
     end
+  end
+
+  class TestRequest < ActionDispatch::TestRequest
+    def initialize(env = {})
+      super
+      self.session = HashWithIndifferentAccess.new
+    end
+
+    def cookie_jar
+      @cookie_jar ||= ActionDispatch::Cookies::CookieJar.new
+    end
+
+    def flash
+      session['flash'] ||= ActionDispatch::Flash::FlashHash.new
+    end
+  end
+
+  class TestResponse < ActionDispatch::TestResponse
   end
 
   module TestHelper
@@ -46,16 +65,28 @@ module FocusedController
     end
 
     def request
-      @request ||= ActionDispatch::TestRequest.new
+      @request ||= TestRequest.new
     end
 
     def response
-      @response ||= ActionDispatch::TestResponse.new
+      @response ||= TestResponse.new
     end
 
     def req(params = {})
       controller.params = params
       controller.run
+    end
+
+    def session
+      controller.session
+    end
+
+    def flash
+      controller.flash
+    end
+
+    def cookies
+      request.cookie_jar
     end
 
     def assert_template(template, message = nil)
