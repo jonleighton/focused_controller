@@ -102,7 +102,7 @@ module FocusedController
     end
 
     def assert_redirected_to(location, message = nil)
-      # This method is just defined for the docs
+      controller # make sure controller is initialized
       super
     end
 

@@ -13,7 +13,13 @@ module FocusedController
       env    = Rack::MockRequest.env_for(path, {:method => method})
       req    = route_set.request_class.new(env)
 
-      route_set.router.recognize(req) do |route, matches, params|
+      if route_set.respond_to?(:router)
+        router = route_set.router # Rails 3.2+
+      else
+        router = route_set.set    # Rails 3.0, 3.1
+      end
+
+      router.recognize(req) do |route, matches, params|
         return route.app
       end
     end

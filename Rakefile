@@ -1,3 +1,5 @@
+require 'bundler/setup'
+require 'appraisal'
 require "bundler/gem_tasks"
 require 'rake/testtask'
 

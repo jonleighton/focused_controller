@@ -1,41 +1,56 @@
 require 'action_dispatch'
 
 module FocusedController
-  class RouteMapper < ActionDispatch::Routing::Mapper
-    def initialize(set, scope)
-      @set, @scope = set, scope
+  # The monkey-patching in this file makes me sadface but I can't see
+  # another way ;(
+  class RouteMapper
+    def initialize(scope, options)
+      @scope, @options = scope, options
     end
 
-    def add_route(action, options)
-      options = options.dup
+    def options
+      options = @options.dup
 
-      if to = focused_controller_action(action, options)
+      if to = to_option
         options[:to] = FocusedController::Route.new(to)
       end
 
-      super(action, options)
+      options
     end
 
     private
 
-    def focused_controller_action(action, options)
-      if options[:to] && !options[:to].respond_to?(:call)
-        options[:to]
-      elsif action && @scope[:controller]
+    def to_option
+      if @options[:to] && !@options[:to].respond_to?(:call)
+        @options[:to]
+      elsif @options[:action] && @scope[:controller]
         name = ''
         name << @scope[:module].camelize << '::' if @scope[:module]
         name << @scope[:controller].camelize << 'Controller::'
-        name << action.to_s.camelize
+        name << @options[:action].to_s.camelize
         name
       end
     end
   end
 
-  module MapperExtension
+  class ActionDispatch::Routing::Mapper
     def focused_controller_routes(&block)
-      RouteMapper.new(@set, @scope).instance_eval(&block)
+      prev, @scope[:focused_controller_routes] = @scope[:focused_controller_routes], true
+      yield
+    ensure
+      @scope[:focused_controller_routes] = false
+    end
+
+    class Mapping
+      def initialize_with_focused_controller(set, scope, path, options)
+        if scope[:focused_controller_routes]
+          options = FocusedController::RouteMapper.new(scope, options).options
+        end
+
+        initialize_without_focused_controller(set, scope, path, options)
+      end
+
+      alias_method_chain :initialize, :focused_controller
     end
   end
-
-  ActionDispatch::Routing::Mapper.send(:include, MapperExtension)
 end
