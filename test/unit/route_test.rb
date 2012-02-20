@@ -5,7 +5,7 @@ module FocusedController
   end
 
   describe Route do
-    let(:controller) { MiniTest::Mock.new }
+    let(:controller) { Object.new }
     subject { Route.new('FocusedController::Test::RouteTestController') }
 
     before do
@@ -19,10 +19,14 @@ module FocusedController
     describe '#call' do
       it 'constantizes the name and invokes #call on the constant' do
         env, resp = Object.new, Object.new
-        controller.expect :call, resp, [env]
+
+        # Not using MiniTest::Mock for this because it caused problems
+        # with Rubinius
+        controller.singleton_class.send :define_method, :call do |call_env|
+          resp if call_env == env
+        end
 
         subject.call(env).must_equal resp
-        controller.verify
       end
     end
 

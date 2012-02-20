@@ -70,7 +70,7 @@ describe 'acceptance test' do
         start   = Time.now
         started = false
         output  = ""
-        timeout = 15.0
+        timeout = 60.0
 
         while !started && !out.eof? && Time.now - start <= timeout
           output << read_output(out)
