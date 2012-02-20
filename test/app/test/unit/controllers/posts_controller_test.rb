@@ -51,7 +51,7 @@ class PostsController
   class UpdateTest < TestCase
     test "should update post" do
       req :id => @post.id
-      assert_redirected_to post_path(@controller.post)
+      assert_redirected_to post_path(controller.post)
     end
   end
 
