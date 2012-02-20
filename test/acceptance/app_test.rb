@@ -29,10 +29,10 @@ describe 'acceptance test' do
     Bundler.with_clean_env do
       Dir.chdir(app_root) do
         begin
-          prev, ENV['PWD'] = ENV['PWD'], app_root
+          prev, ENV['BUNDLE_GEMFILE'] = ENV['BUNDLE_GEMFILE'], "#{app_root}/Gemfile"
           yield
         ensure
-          ENV['PWD'] = prev
+          ENV['BUNDLE_GEMFILE'] = prev
         end
       end
     end
