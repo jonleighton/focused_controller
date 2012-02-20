@@ -3,9 +3,6 @@ require 'action_controller/test_case'
 
 module FocusedController
   module FunctionalTestHelper
-    class FakeTestCase
-    end
-
     class FakePostsController
       class Index; end
       class Show; end
