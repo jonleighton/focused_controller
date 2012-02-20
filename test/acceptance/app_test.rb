@@ -30,6 +30,8 @@ describe 'acceptance test' do
       Dir.chdir(app_root) do
         begin
           prev, ENV['BUNDLE_GEMFILE'] = ENV['BUNDLE_GEMFILE'], "#{app_root}/Gemfile"
+          require 'pp'
+          pp ENV
           yield
         ensure
           ENV['BUNDLE_GEMFILE'] = prev
