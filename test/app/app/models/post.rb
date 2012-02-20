@@ -1,5 +1,3 @@
-POSTS = [] unless defined?(POSTS)
-
 class Post
   extend ActiveModel::Naming
   include ActiveModel::Validations

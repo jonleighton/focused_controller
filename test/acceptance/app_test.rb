@@ -31,6 +31,7 @@ describe 'acceptance test' do
         begin
           prev_gemfile, ENV['BUNDLE_GEMFILE'] = ENV['BUNDLE_GEMFILE'], "#{app_root}/Gemfile"
           prev_rubyopt, ENV['RUBYOPT']        = ENV['RUBYOPT'], nil
+          ENV['RAILS_VERSION'] = ActionPack::VERSION::STRING
           yield
         ensure
           ENV['BUNDLE_GEMFILE'] = prev_gemfile

@@ -1,3 +1,4 @@
+require 'focused_controller/action_name'
 require 'action_dispatch'
 
 module FocusedController
@@ -12,7 +13,8 @@ module FocusedController
       options = @options.dup
 
       if to = to_option
-        options[:to] = FocusedController::Route.new(to)
+        options[:to]     = FocusedController::Route.new(to)
+        options[:action] = FocusedController.action_name
       end
 
       options

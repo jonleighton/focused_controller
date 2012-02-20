@@ -1,0 +1,83 @@
+/* This is a static file. It was exported so we don't have to depend on
+ * the asset pipeline, so we can run the app against Rails 3.0 too. */
+
+/* line 1, /home/turnip/Code/focused_controller/test/app/app/assets/stylesheets/scaffolds.css.scss */
+body {
+  background-color: #fff;
+  color: #333;
+  font-family: verdana, arial, helvetica, sans-serif;
+  font-size: 13px;
+  line-height: 18px;
+}
+
+/* line 8, /home/turnip/Code/focused_controller/test/app/app/assets/stylesheets/scaffolds.css.scss */
+p, ol, ul, td {
+  font-family: verdana, arial, helvetica, sans-serif;
+  font-size: 13px;
+  line-height: 18px;
+}
+
+/* line 13, /home/turnip/Code/focused_controller/test/app/app/assets/stylesheets/scaffolds.css.scss */
+pre {
+  background-color: #eee;
+  padding: 10px;
+  font-size: 11px;
+}
+
+/* line 18, /home/turnip/Code/focused_controller/test/app/app/assets/stylesheets/scaffolds.css.scss */
+a {
+  color: #000;
+}
+/* line 20, /home/turnip/Code/focused_controller/test/app/app/assets/stylesheets/scaffolds.css.scss */
+a:visited {
+  color: #666;
+}
+/* line 22, /home/turnip/Code/focused_controller/test/app/app/assets/stylesheets/scaffolds.css.scss */
+a:hover {
+  color: #fff;
+  background-color: #000;
+}
+
+/* line 27, /home/turnip/Code/focused_controller/test/app/app/assets/stylesheets/scaffolds.css.scss */
+div.field, div.actions {
+  margin-bottom: 10px;
+}
+
+/* line 30, /home/turnip/Code/focused_controller/test/app/app/assets/stylesheets/scaffolds.css.scss */
+#notice {
+  color: green;
+}
+
+/* line 33, /home/turnip/Code/focused_controller/test/app/app/assets/stylesheets/scaffolds.css.scss */
+.field_with_errors {
+  padding: 2px;
+  background-color: red;
+  display: table;
+}
+
+/* line 38, /home/turnip/Code/focused_controller/test/app/app/assets/stylesheets/scaffolds.css.scss */
+#error_explanation {
+  width: 450px;
+  border: 2px solid red;
+  padding: 7px;
+  padding-bottom: 0;
+  margin-bottom: 20px;
+  background-color: #f0f0f0;
+}
+/* line 45, /home/turnip/Code/focused_controller/test/app/app/assets/stylesheets/scaffolds.css.scss */
+#error_explanation h2 {
+  text-align: left;
+  font-weight: bold;
+  padding: 5px 5px 5px 15px;
+  font-size: 12px;
+  margin: -7px;
+  margin-bottom: 0px;
+  background-color: #c00;
+  color: #fff;
+}
+/* line 54, /home/turnip/Code/focused_controller/test/app/app/assets/stylesheets/scaffolds.css.scss */
+#error_explanation ul li {
+  font-size: 12px;
+  list-style: square;
+}
+
