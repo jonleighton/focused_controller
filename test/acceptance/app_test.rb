@@ -68,6 +68,15 @@ describe 'acceptance test' do
     Process.kill('TERM', @pid)
   end
 
+  def run_command(command)
+    Dir.chdir(TEST_ROOT + '/app') do
+      prev, ENV['BUNDLE_GEMFILE'] = ENV['BUNDLE_GEMFILE'], nil
+      `bundle exec #{command}`
+      $?.must_equal 0
+      ENV['BUNDLE_GEMFILE'] = prev
+    end
+  end
+
   let(:s) { Capybara::Session.new(:poltergeist, nil) }
 
   it 'does basic CRUD actions successfully' do
@@ -102,11 +111,14 @@ describe 'acceptance test' do
   end
 
   it 'runs a functional test' do
-    Dir.chdir(TEST_ROOT + '/app') do
-      prev, ENV['BUNDLE_GEMFILE'] = ENV['BUNDLE_GEMFILE'], nil
-      `bundle exec ruby -Itest test/functional/posts_controller_test.rb`
-      $?.must_equal 0
-      ENV['BUNDLE_GEMFILE'] = prev
-    end
+    run_command "ruby -Itest test/functional/posts_controller_test.rb"
+  end
+
+  it 'runs a unit test' do
+    run_command "ruby -Itest test/unit/controllers/posts_controller_test.rb"
+  end
+
+  it 'runs a unit spec' do
+    run_command "rspec spec/unit/controllers/posts_controller_spec.rb"
   end
 end
