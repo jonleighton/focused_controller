@@ -1,6 +1,6 @@
 require 'helper'
+require 'focused_controller/test_helper'
 require 'action_controller'
-require 'ostruct'
 
 module FocusedController
   module TestHelper
