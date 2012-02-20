@@ -1,3 +1,4 @@
+require 'focused_controller/action_name'
 require 'active_support/concern'
 require 'active_support/core_ext/string/conversions'
 require 'active_support/core_ext/class/attribute'

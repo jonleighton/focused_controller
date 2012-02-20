@@ -1,3 +1,5 @@
+require 'focused_controller/action_name'
+
 module FocusedController
   class Route
     attr_reader :name
