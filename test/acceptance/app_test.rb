@@ -28,8 +28,7 @@ describe 'acceptance test' do
       # Source ~/.bashrc on travis so that rvm gets loaded correctly and the
       # gems are found.
       if ENV['TRAVIS']
-        p ENV
-        command = "source $HOME/.bashrc && #{command}"
+        command = "source #{ENV['HOME']}/.bashrc && #{command}"
       end
 
       `#{command}`
