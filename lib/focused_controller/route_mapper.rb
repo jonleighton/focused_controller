@@ -14,7 +14,7 @@ module FocusedController
 
       if to = to_option
         options[:to]     = FocusedController::Route.new(to)
-        options[:action] = FocusedController.action_name
+        options[:action] = FocusedController.action_name # necessary for rails <= 3.1
       end
 
       options
