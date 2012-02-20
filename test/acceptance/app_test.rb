@@ -82,6 +82,9 @@ describe 'acceptance test' do
   end
 
   before do
+    # Travis sets a RUBYOPT that requires bundler, which means it ends
+    # up being required before we have a chance to actually install the
+    # gems. So turn this off while we install the gems.
     prev, ENV['RUBYOPT'] = ENV['RUBYOPT'], nil if ENV['TRAVIS']
     run_without_bundler "bundle --quiet"
     ENV['RUBYOPT'] = prev if ENV['TRAVIS']
