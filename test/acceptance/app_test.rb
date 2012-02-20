@@ -24,15 +24,6 @@ describe 'acceptance test' do
   def run_without_bundler(command)
     Dir.chdir(TEST_ROOT + '/app') do
       prev, ENV['BUNDLE_GEMFILE'] = ENV['BUNDLE_GEMFILE'], nil
-
-      # Source ~/.bashrc on travis so that rvm gets loaded correctly and the
-      # gems are found.
-      if ENV['TRAVIS']
-        # puts `env`
-        puts `ls -lha $HOME`
-        command = ". /home/vagrant/.bashrc && #{command}"
-      end
-
       `#{command}`
       $?.must_equal 0
       ENV['BUNDLE_GEMFILE'] = prev
@@ -91,7 +82,9 @@ describe 'acceptance test' do
   end
 
   before do
+    prev, ENV['RUBYOPT'] = ENV['RUBYOPT'], nil if ENV['TRAVIS']
     run_without_bundler "bundle --quiet"
+    ENV['RUBYOPT'] = prev if ENV['TRAVIS']
   end
 
   let(:s) { Capybara::Session.new(:poltergeist, nil) }
