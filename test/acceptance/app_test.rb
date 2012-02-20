@@ -23,8 +23,11 @@ Capybara.app_host   = "http://127.0.0.1:#{FocusedController::Test.port}"
 describe 'acceptance test' do
   def within_test_app
     Bundler.with_clean_env do
-      Dir.chdir(TEST_ROOT + '/app') do
+      begin
+        prev, ENV['PWD'] = ENV['PWD'], TEST_ROOT + '/app'
         yield
+      ensure
+        ENV['PWD'] = prev
       end
     end
   end
