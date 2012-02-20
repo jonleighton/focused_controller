@@ -1,5 +1,4 @@
-require 'action_dispatch/testing/test_request'
-require 'action_dispatch/testing/test_response'
+require 'action_dispatch'
 require 'active_support/concern'
 require 'active_support/core_ext/class/attribute'
 require 'active_support/hash_with_indifferent_access'
@@ -50,7 +49,9 @@ module FocusedController
       end
 
       def include_routes
-        include controller._routes.named_routes.module
+        if controller.respond_to?(:_routes) && controller._routes
+          include controller._routes.named_routes.module
+        end
       end
     end
 

@@ -20,10 +20,10 @@ Gem::Specification.new do |s|
 
   s.add_dependency 'actionpack', '~> 3.2'
 
-  # specify any dependencies here; for example:
   s.add_development_dependency 'minitest', '~> 2.11.2'
   s.add_development_dependency 'capybara', '~> 1.1.2'
   s.add_development_dependency 'capybara_minitest_spec', '~> 0.2.1'
   s.add_development_dependency 'poltergeist', '~> 0.4.0'
-  # s.add_runtime_dependency "rest-client"
+  s.add_development_dependency 'rspec', '~> 2.8.0'
+  s.add_development_dependency 'rspec-rails', '~> 2.8.0'
 end
