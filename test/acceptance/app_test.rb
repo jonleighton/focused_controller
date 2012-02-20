@@ -24,6 +24,11 @@ describe 'acceptance test' do
   def run_without_bundler(command)
     Dir.chdir(TEST_ROOT + '/app') do
       prev, ENV['BUNDLE_GEMFILE'] = ENV['BUNDLE_GEMFILE'], nil
+
+      # Source ~/.bashrc on travis so that rvm gets loaded correctly and the
+      # gems are found.
+      command = "source ~/.bashrc && #{command}" if ENV['TRAVIS']
+
       `#{command}`
       $?.must_equal 0
       ENV['BUNDLE_GEMFILE'] = prev
