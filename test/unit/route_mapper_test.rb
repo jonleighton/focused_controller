@@ -20,7 +20,7 @@ module FocusedController
       end
 
       router.recognize(req) do |route, matches, params|
-        return route.app
+        return route
       end
     end
 
@@ -41,13 +41,21 @@ module FocusedController
         end
       end
 
-      recognize('/posts').name.must_equal 'PostsController::Index'
-      recognize('/comments').name.must_equal 'CommentsController::Index'
-      recognize('/comments/4').name.must_equal 'CommentsController::Show'
-      recognize('/comments/4', :method => :put).name.must_equal 'CommentsController::Update'
-      recognize('/account').name.must_equal 'AccountsController::Show'
-      recognize('/comments/4/replies').name.must_equal 'RepliesController::Index'
-      recognize('/admin/comments').name.must_equal 'Admin::CommentsController::Index'
+      mappings = {
+        [:get, '/posts']              => 'PostsController::Index',
+        [:get, '/comments']           => 'CommentsController::Index',
+        [:get, '/comments/4']         => 'CommentsController::Show',
+        [:put, '/comments/4']         => 'CommentsController::Update',
+        [:get, '/account']            => 'AccountsController::Show',
+        [:get, '/comments/4/replies'] => 'RepliesController::Index',
+        [:get, '/admin/comments']     => 'Admin::CommentsController::Index'
+      }
+
+      mappings.each do |(method, path), controller|
+        route = recognize(path, :method => method)
+        route.app.name.must_equal controller
+        route.defaults[:action].must_equal 'run'
+      end
     end
 
     it "doesn't mess with callable routes" do
@@ -59,7 +67,7 @@ module FocusedController
           match 'posts' => app
         end
       end
-      recognize('/posts').must_equal app
+      recognize('/posts').app.must_equal app
     end
   end
 end
