@@ -31,28 +31,28 @@ describe PostsController do
 
   describe PostsController::Show do
     it "should show post" do
-      get :id => @post
+      get :id => @post.id
       response.should be_success
     end
   end
 
   describe PostsController::Edit do
     it "should get edit" do
-      get :id => @post
+      get :id => @post.id
       response.should be_success
     end
   end
 
   describe PostsController::Update do
     it "should update post" do
-      put :id => @post, :post => @post.attributes
+      put :id => @post.id, :post => @post.attributes
       response.should redirect_to(post_path(subject.post))
     end
   end
 
   describe PostsController::Destroy do
     it "should destroy post" do
-      expect { delete :id => @post }.to change(Post, :count).by(-1)
+      expect { delete :id => @post.id }.to change(Post, :count).by(-1)
       response.should redirect_to(posts_path)
     end
   end

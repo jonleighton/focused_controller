@@ -28,6 +28,6 @@ module Rails
   end
 
   def self.application
-    OpenStruct.new(:env_config => {})
+    OpenStruct.new(:env_config => {}, :env_defaults => {})
   end
 end

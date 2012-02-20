@@ -6,6 +6,7 @@ rvm:
 gemfile:
   - gemfiles/rails-3-2.gemfile
   - gemfiles/rails-3-1.gemfile
+  - gemfiles/rails-3-0.gemfile
 before_script:
   - "export DISPLAY=:99.0"
   - "sh -e /etc/init.d/xvfb start"

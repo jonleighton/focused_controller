@@ -36,21 +36,21 @@ class PostsController
 
   class ShowTest < TestCase
     test "should show post" do
-      get :id => @post
+      get :id => @post.id
       assert_response :success
     end
   end
 
   class EditTest < TestCase
     test "should get edit" do
-      get :id => @post
+      get :id => @post.id
       assert_response :success
     end
   end
 
   class UpdateTest < TestCase
     test "should update post" do
-      put :id => @post, :post => @post.attributes
+      put :id => @post.id, :post => @post.attributes
       assert_redirected_to post_path(@controller.post)
     end
   end
@@ -58,7 +58,7 @@ class PostsController
   class DestroyTest < TestCase
     test "should destroy post" do
       assert_difference('Post.count', -1) do
-        delete :id => @post
+        delete :id => @post.id
       end
 
       assert_redirected_to posts_path
