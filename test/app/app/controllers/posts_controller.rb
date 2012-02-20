@@ -34,9 +34,9 @@ class PostsController
   class Create < Singular
     def run
       if post.save
-        redirect_to post, notice: 'Post was successfully created.'
+        redirect_to post, :notice => 'Post was successfully created.'
       else
-        render action: "new"
+        render :action => "new"
       end
     end
   end
@@ -44,9 +44,9 @@ class PostsController
   class Update < Singular
     def run
       if post.update_attributes(params[:post])
-        redirect_to post, notice: 'Post was successfully updated.'
+        redirect_to post, :notice => 'Post was successfully updated.'
       else
-        render action: "edit"
+        render :action => "edit"
       end
     end
   end

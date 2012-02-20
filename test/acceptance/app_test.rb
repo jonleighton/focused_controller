@@ -21,12 +21,18 @@ Capybara.run_server = false
 Capybara.app_host   = "http://127.0.0.1:#{FocusedController::Test.port}"
 
 describe 'acceptance test' do
-  def run_without_bundle_exec(command)
-    Dir.chdir(TEST_ROOT + '/app') do
-      Bundler.with_clean_env do
-        `#{command}`
-        $?.must_equal 0
+  def within_test_app
+    Bundler.with_clean_env do
+      Dir.chdir(TEST_ROOT + '/app') do
+        yield
       end
+    end
+  end
+
+  def run_without_bundle_exec(command)
+    within_test_app do
+      `#{command}`
+      $?.must_equal 0
     end
   end
 
@@ -34,51 +40,45 @@ describe 'acceptance test' do
     run_without_bundle_exec "bundle exec #{command}"
   end
 
+  def read_output(stream)
+    read = IO.select([stream], [], [stream], 0.1)
+    output = ""
+    loop { output << stream.read_nonblock(1024) } if read
+    output
+  rescue Errno::EAGAIN, Errno::EWOULDBLOCK, EOFError
+    output
+  end
+
   # This spawns a server process to run the app under test,
   # and then waits for it to successfully come up so we can
   # actually run the test.
   def start_server
-    output = IO.pipe
-    @pid = Kernel.spawn(
-      { 'BUNDLE_GEMFILE' => TEST_ROOT + '/app/Gemfile' },
-      "bundle exec rails s -p #{FocusedController::Test.port}",
-      :chdir => TEST_ROOT + '/app',
-      :out => output[1], :err => output[1]
-    )
+    within_test_app do
+      IO.popen("bundle exec rails s -p #{FocusedController::Test.port} 2>&1") do |out|
+        start   = Time.now
+        started = false
+        output  = ""
+        timeout = 15.0
 
-    start   = Time.now
-    started = false
+        while !started && !out.eof? && Time.now - start <= timeout
+          output << read_output(out)
+          sleep 0.1
 
-    while !started && Time.now - start <= 15.0
-      begin
-        sleep 0.1
-        TCPSocket.new('127.0.0.1', FocusedController::Test.port)
-      rescue Errno::ECONNREFUSED
-      else
-        started = true
-      end
-    end
-
-    unless started
-      puts "Server failed to start"
-      puts "Output:"
-      puts
-
-      loop do
-        begin
-          print output[0].read_nonblock(1024)
-        rescue Errno::EWOULDBLOCK, Errno::EAGAIN
-          puts
-          break
+          begin
+            TCPSocket.new('127.0.0.1', FocusedController::Test.port)
+          rescue Errno::ECONNREFUSED
+          else
+            started = true
+          end
         end
+
+        raise "Server failed to start:\n#{output}" unless started
+
+        yield
+
+        Process.kill('KILL', out.pid)
       end
-
-      raise
     end
-
-    yield
-
-    Process.kill('TERM', @pid)
   end
 
   before do

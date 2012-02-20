@@ -1,4 +1,4 @@
-POSTS ||= []
+POSTS = [] unless defined?(POSTS)
 
 class Post
   extend ActiveModel::Naming

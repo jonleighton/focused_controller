@@ -24,35 +24,35 @@ describe PostsController do
 
   describe PostsController::Create do
     it "should create post" do
-      expect { post post: @post.attributes }.to change(Post, :count).by(1)
+      expect { post :post => @post.attributes }.to change(Post, :count).by(1)
       response.should redirect_to(post_path(subject.post))
     end
   end
 
   describe PostsController::Show do
     it "should show post" do
-      get id: @post
+      get :id => @post
       response.should be_success
     end
   end
 
   describe PostsController::Edit do
     it "should get edit" do
-      get id: @post
+      get :id => @post
       response.should be_success
     end
   end
 
   describe PostsController::Update do
     it "should update post" do
-      put id: @post, post: @post.attributes
+      put :id => @post, :post => @post.attributes
       response.should redirect_to(post_path(subject.post))
     end
   end
 
   describe PostsController::Destroy do
     it "should destroy post" do
-      expect { delete id: @post }.to change(Post, :count).by(-1)
+      expect { delete :id => @post }.to change(Post, :count).by(-1)
       response.should redirect_to(posts_path)
     end
   end
