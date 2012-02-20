@@ -14,7 +14,11 @@ module FocusedController
 
     module ClassMethods
       def controller_path
-        @focused_controller_path ||= name.sub(/\:\:[^\:]+$/, '').sub(/Controller$/, '').underscore
+        @focused_controller_path ||= name && name.sub(/\:\:[^\:]+$/, '').sub(/Controller$/, '').underscore
+      end
+
+      def call(env)
+        action(FocusedController.action_name).call(env)
       end
     end
 
