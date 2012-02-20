@@ -21,17 +21,17 @@ Capybara.run_server = false
 Capybara.app_host   = "http://127.0.0.1:#{FocusedController::Test.port}"
 
 describe 'acceptance test' do
-  def run_without_bundler(command)
+  def run_without_bundle_exec(command)
     Dir.chdir(TEST_ROOT + '/app') do
-      prev, ENV['BUNDLE_GEMFILE'] = ENV['BUNDLE_GEMFILE'], nil
-      `#{command}`
-      $?.must_equal 0
-      ENV['BUNDLE_GEMFILE'] = prev
+      Bundler.with_clean_env do
+        `#{command}`
+        $?.must_equal 0
+      end
     end
   end
 
   def run_command(command)
-    run_without_bundler "bundle exec #{command}"
+    run_without_bundle_exec "bundle exec #{command}"
   end
 
   # This spawns a server process to run the app under test,
@@ -82,12 +82,7 @@ describe 'acceptance test' do
   end
 
   before do
-    # Travis sets a RUBYOPT that requires bundler, which means it ends
-    # up being required before we have a chance to actually install the
-    # gems. So turn this off while we install the gems.
-    prev, ENV['RUBYOPT'] = ENV['RUBYOPT'], nil if ENV['TRAVIS']
-    run_without_bundler "bundle --quiet"
-    ENV['RUBYOPT'] = prev if ENV['TRAVIS']
+    run_without_bundle_exec "bundle --quiet"
   end
 
   let(:s) { Capybara::Session.new(:poltergeist, nil) }
