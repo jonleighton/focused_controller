@@ -94,7 +94,7 @@ describe 'acceptance test' do
   end
 
   before do
-    run_without_bundle_exec "bundle --quiet"
+    run_without_bundle_exec "bundle check >/dev/null || bundle update >/dev/null"
   end
 
   let(:s) { Capybara::Session.new(:poltergeist, nil) }
