@@ -1,11 +1,14 @@
 require 'bundler/setup'
+require 'test/unit/testcase'
+require 'active_support/test_case'
 require 'minitest/spec'
 require 'minitest/autorun'
 require 'focused_controller'
 require 'pathname'
 require 'ostruct'
-
 require 'rspec/core'
+
+TEST_ROOT = File.expand_path('..', __FILE__)
 
 # Don't want to actually use RSpec to run our tests
 module RSpec::Core::DSL
@@ -28,5 +31,3 @@ module Rails
     OpenStruct.new(:env_config => {})
   end
 end
-
-TEST_ROOT = File.expand_path('..', __FILE__)

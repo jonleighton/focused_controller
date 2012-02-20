@@ -1,15 +1,22 @@
 require 'helper'
 require 'focused_controller/functional_test_helper'
-require 'action_controller/test_case'
+require 'action_controller'
 
 module FocusedController
   module FunctionalTestHelper
     class FakePostsController
-      class Index; end
-      class Show; end
+      class Action < ActionController::Base; end
+      class Index < Action; end
+      class Show < Action; end
 
       class TestCase < ActionController::TestCase
         include FocusedController::FunctionalTestHelper
+
+        def initialize(method_name = :foo)
+          super
+        end
+
+        def foo; end
       end
 
       class IndexTest < TestCase
@@ -20,7 +27,7 @@ module FocusedController
     end
 
     describe FunctionalTestHelper do
-      subject { FakePostsController::IndexTest.new(nil) }
+      subject { FakePostsController::IndexTest.new }
 
       it 'automatically determines the controller class' do
         FakePostsController::IndexTest.controller_class.

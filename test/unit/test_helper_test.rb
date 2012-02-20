@@ -50,6 +50,12 @@ module FocusedController
 
       class TestCase < ActiveSupport::TestCase
         include FocusedController::TestHelper
+
+        def initialize(method_name = :foo)
+          super
+          @_result = OpenStruct.new
+        end
+        def foo; end
       end
 
       class IndexTest < TestCase
@@ -76,14 +82,14 @@ module FocusedController
         }
 
         mappings.each do |test, action|
-          test.new(nil).controller.is_a?(action).must_equal true
+          test.new.controller.is_a?(action).must_equal true
         end
       end
 
-      subject { FakePostsController::IndexTest.new(nil) }
+      subject { FakePostsController::IndexTest.new }
 
       def must_fail(&block)
-        block.must_raise MiniTest::Assertion
+        block.must_raise ActiveSupport::TestCase::Assertion
       end
 
       def must_succeed(&block)
@@ -136,7 +142,7 @@ module FocusedController
         subject.respond_to?(:bar_path).must_equal false
         subject.foo_path.must_equal '/foo'
 
-        other = FakePostsController::ShowTest.new(nil)
+        other = FakePostsController::ShowTest.new
         other.respond_to?(:foo_path).must_equal false
         other.respond_to?(:bar_path).must_equal true
         other.bar_path.must_equal '/bar'
