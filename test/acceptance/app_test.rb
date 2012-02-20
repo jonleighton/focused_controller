@@ -21,6 +21,19 @@ Capybara.run_server = false
 Capybara.app_host   = "http://127.0.0.1:#{FocusedController::Test.port}"
 
 describe 'acceptance test' do
+  def run_without_bundler(command)
+    Dir.chdir(TEST_ROOT + '/app') do
+      prev, ENV['BUNDLE_GEMFILE'] = ENV['BUNDLE_GEMFILE'], nil
+      `#{command}`
+      $?.must_equal 0
+      ENV['BUNDLE_GEMFILE'] = prev
+    end
+  end
+
+  def run_command(command)
+    run_without_bundler "bundle exec #{command}"
+  end
+
   # This spawns a server process to run the app under test,
   # and then waits for it to successfully come up so we can
   # actually run the test.
@@ -68,13 +81,8 @@ describe 'acceptance test' do
     Process.kill('TERM', @pid)
   end
 
-  def run_command(command)
-    Dir.chdir(TEST_ROOT + '/app') do
-      prev, ENV['BUNDLE_GEMFILE'] = ENV['BUNDLE_GEMFILE'], nil
-      `bundle exec #{command}`
-      $?.must_equal 0
-      ENV['BUNDLE_GEMFILE'] = prev
-    end
+  before do
+    run_without_bundler "bundle --quiet"
   end
 
   let(:s) { Capybara::Session.new(:poltergeist, nil) }
