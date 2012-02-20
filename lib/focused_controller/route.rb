@@ -1,5 +1,3 @@
-require 'focused_controller/action_name'
-
 module FocusedController
   class Route
     attr_reader :name
@@ -12,8 +10,6 @@ module FocusedController
       name.constantize.call(env)
     end
 
-    def to_s
-      "#{name}##{FocusedController.action_name}"
-    end
+    alias to_s name
   end
 end

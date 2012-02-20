@@ -27,8 +27,8 @@ module FocusedController
     end
 
     describe '#to_s' do
-      it "returns the the name, plus '#run'" do
-        subject.to_s.must_equal 'FocusedController::Test::RouteTestController#run'
+      it "returns the the name" do
+        subject.to_s.must_equal 'FocusedController::Test::RouteTestController'
       end
     end
   end
