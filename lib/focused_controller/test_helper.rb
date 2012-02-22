@@ -36,28 +36,28 @@ module FocusedController
     include ActionDispatch::Assertions::ResponseAssertions
 
     included do
-      class_attribute :_controller, :instance_reader => false, :instance_writer => false
+      class_attribute :_controller_class, :instance_reader => false, :instance_writer => false
     end
 
     module ClassMethods
-      def controller=(klass)
-        self._controller = klass
+      def controller_class=(klass)
+        self._controller_class = klass
       end
 
-      def controller
-        _controller || name.sub(/Test$/, '').constantize
+      def controller_class
+        _controller_class || name.sub(/Test$/, '').constantize
       end
 
       def include_routes
-        if controller.respond_to?(:_routes) && controller._routes
-          include controller._routes.named_routes.module
+        if controller_class.respond_to?(:_routes) && controller_class._routes
+          include controller_class._routes.named_routes.module
         end
       end
     end
 
     def controller
       @controller ||= begin
-        controller = self.class.controller.new
+        controller = self.class.controller_class.new
         controller.singleton_class.send :include, TestHooks
         controller.request  = request
         controller.response = response
@@ -108,9 +108,6 @@ module FocusedController
 
     def url_for(*args)
       controller.url_for(*args)
-    end
-
-    def _routes_included?
     end
 
     def respond_to?(method_name)

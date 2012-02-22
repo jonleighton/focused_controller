@@ -17,9 +17,7 @@ module FocusedController
         # This must get included higher in the ancestor chain than
         # this module so that inheritance works as desired
         include FocusedController::TestHelper
-
         extend ClassMethods
-
         subject { controller }
       end
 
@@ -33,20 +31,16 @@ module FocusedController
     end
 
     module ClassMethods
-      def controller
-        metadata   = self.metadata[:example_group]
-        controller = nil
+      def controller_class
+        metadata = self.metadata[:example_group]
+        klass    = nil
 
-        until metadata.nil? || controller.respond_to?(:new)
-          controller = metadata[:description_args].first
-          metadata   = metadata[:example_group]
+        until metadata.nil? || klass.respond_to?(:new)
+          klass    = metadata[:description_args].first
+          metadata = metadata[:example_group]
         end
 
-        if controller.respond_to?(:new)
-          controller
-        else
-          super
-        end
+        klass.respond_to?(:new) ? klass : super
       end
     end
   end

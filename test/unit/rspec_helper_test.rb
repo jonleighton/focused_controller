@@ -38,15 +38,15 @@ module FocusedController
 
     edit_spec = RSpec::Core::ExampleGroup.describe "the edit action" do
       include FocusedController::RSpecHelper
-      self.controller = FakePostsController::Edit
+      self.controller_class = FakePostsController::Edit
     end
 
     describe RSpecHelper do
       it 'finds the correct controller class' do
-        index_spec.controller.must_equal FakePostsController::Index
-        show_spec.controller.must_equal FakePostsController::Show
-        inner_show_spec.controller.must_equal FakePostsController::Show
-        edit_spec.controller.must_equal FakePostsController::Edit
+        index_spec.controller_class.must_equal FakePostsController::Index
+        show_spec.controller_class.must_equal FakePostsController::Show
+        inner_show_spec.controller_class.must_equal FakePostsController::Show
+        edit_spec.controller_class.must_equal FakePostsController::Edit
       end
 
       subject { index_spec.new }

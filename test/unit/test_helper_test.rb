@@ -65,7 +65,7 @@ module FocusedController
       end
 
       class OtherShowTest < TestCase
-        self.controller = Show
+        self.controller_class = Show
       end
 
       class OtherOtherShowTest < OtherShowTest
