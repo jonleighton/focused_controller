@@ -7,9 +7,9 @@ Gem::Specification.new do |s|
   s.version     = FocusedController::VERSION
   s.authors     = ["Jon Leighton"]
   s.email       = ["j@jonathanleighton.com"]
-  s.homepage    = ""
-  s.summary     = %q{TODO: Write a gem summary}
-  s.description = %q{TODO: Write a gem description}
+  s.homepage    = "http://github.com/jonleighton/focused_controller"
+  s.summary     = %q{Write Rails controllers that don't violate SRP}
+  s.description = %q{Write Rails controllers that don't violate SRP}
 
   s.rubyforge_project = "focused_controller"
 
