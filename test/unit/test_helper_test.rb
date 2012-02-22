@@ -167,18 +167,36 @@ module FocusedController
         subject.cookies[:foo].must_equal 'omg'
       end
 
-      it "has a #req method that sets params and calls the controller's #run" do
-        subject.req(:omg => true).must_equal 'omg'
-      end
+      describe "#req" do
+        it "sets params and calls the controller's #run" do
+          subject.req(:omg => true).must_equal 'omg'
+        end
 
-      it 'supports setting session with #req' do
-        subject.req(nil, { :foo => 'bar' })
-        subject.session[:foo].must_equal 'bar'
-      end
+        it 'sets session' do
+          subject.req(nil, { :foo => 'bar' })
+          subject.session[:foo].must_equal 'bar'
+        end
 
-      it 'supports setting flash with #req' do
-        subject.req(nil, nil, { :foo => 'bar' })
-        subject.flash[:foo].must_equal 'bar'
+        it 'set flash' do
+          subject.req(nil, nil, { :foo => 'bar' })
+          subject.flash[:foo].must_equal 'bar'
+        end
+
+        it "doesn't overwrite existing params, session, or flash if new ones aren't provided" do
+          subject.controller.params[:param] = true
+          subject.controller.flash[:flash] = true
+          subject.controller.session[:session] = true
+
+          subject.req
+
+          subject.controller.params[:param].must_equal true
+          subject.controller.flash[:flash].must_equal true
+          subject.controller.session[:session].must_equal true
+
+          subject.req({})
+
+          subject.controller.params[:param].must_equal(nil)
+        end
       end
     end
   end
