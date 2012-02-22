@@ -33,6 +33,10 @@ module FocusedController
 
     module ClassMethods
       include FocusedController::RSpecControllerClass
+
+      def stub_url(*helper_names)
+        before { stub_url(*helper_names) }
+      end
     end
   end
 end
