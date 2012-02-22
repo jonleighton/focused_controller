@@ -34,7 +34,13 @@ module FocusedController
 
     module ClassMethods
       def controller
-        controller = metadata[:example_group][:description_args].first
+        metadata   = self.metadata[:example_group]
+        controller = nil
+
+        until metadata.nil? || controller.respond_to?(:new)
+          controller = metadata[:description_args].first
+          metadata   = metadata[:example_group]
+        end
 
         if controller.respond_to?(:new)
           controller

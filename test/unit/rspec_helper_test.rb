@@ -16,6 +16,9 @@ module FocusedController
 
       class Edit < Action
       end
+
+      class Destroy < Action
+      end
     end
 
     index_spec = RSpec::Core::ExampleGroup.describe FakePostsController::Index do
@@ -23,9 +26,13 @@ module FocusedController
     end
 
     show_spec = nil
+    inner_show_spec = nil
     RSpec::Core::ExampleGroup.describe FakePostsController do
       show_spec = describe FakePostsController::Show do
         include FocusedController::RSpecHelper
+
+        inner_show_spec = describe 'foo' do
+        end
       end
     end
 
@@ -38,6 +45,7 @@ module FocusedController
       it 'finds the correct controller class' do
         index_spec.controller.must_equal FakePostsController::Index
         show_spec.controller.must_equal FakePostsController::Show
+        inner_show_spec.controller.must_equal FakePostsController::Show
         edit_spec.controller.must_equal FakePostsController::Edit
       end
 
