@@ -15,11 +15,14 @@ module FocusedController
     end
 
     show_spec = nil
+    inner_show_spec = nil
     RSpec::Core::ExampleGroup.describe FakePostsController do
       include RSpec::Rails::ControllerExampleGroup
       include FocusedController::RSpecFunctionalHelper
 
-      show_spec = describe(FakePostsController::Show) {}
+      show_spec = describe(FakePostsController::Show) do
+        inner_show_spec = describe('foo') { }
+      end
     end
 
     describe RSpecFunctionalHelper do
@@ -28,6 +31,7 @@ module FocusedController
       it 'automatically determines the controller class' do
         index_spec.controller_class.must_equal FakePostsController::Index
         show_spec.controller_class.must_equal FakePostsController::Show
+        inner_show_spec.controller_class.must_equal FakePostsController::Show
       end
 
       it 'includes the FocusedController::FunctionalTestHelper' do

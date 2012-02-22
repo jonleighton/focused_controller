@@ -1,4 +1,5 @@
 require 'focused_controller/test_helper'
+require 'focused_controller/rspec_controller_class'
 
 begin
   # Requiring specific files rather than just 'rspec/rails' because I don't
@@ -31,17 +32,7 @@ module FocusedController
     end
 
     module ClassMethods
-      def controller_class
-        metadata = self.metadata[:example_group]
-        klass    = nil
-
-        until metadata.nil? || klass.respond_to?(:new)
-          klass    = metadata[:description_args].first
-          metadata = metadata[:example_group]
-        end
-
-        klass.respond_to?(:new) ? klass : super
-      end
+      include FocusedController::RSpecControllerClass
     end
   end
 end

@@ -3,6 +3,7 @@ require 'action_view'
 require 'action_dispatch'
 require 'rspec/rails'
 require 'focused_controller/functional_test_helper'
+require 'focused_controller/rspec_controller_class'
 
 module FocusedController
   module RSpecFunctionalHelper
@@ -18,15 +19,7 @@ module FocusedController
     end
 
     module ClassMethods
-      def controller_class
-        controller = metadata[:example_group][:description_args].first
-
-        if controller.respond_to?(:new)
-          controller
-        else
-          super
-        end
-      end
+      include FocusedController::RSpecControllerClass
     end
   end
 end
