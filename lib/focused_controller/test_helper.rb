@@ -147,7 +147,7 @@ module FocusedController
       controller.url_for(*args)
     end
 
-    def respond_to?(method_name)
+    def respond_to?(*args)
       unless defined?(@_routes_included) && @_routes_included
         self.class.include_routes
         @_routes_included = true
