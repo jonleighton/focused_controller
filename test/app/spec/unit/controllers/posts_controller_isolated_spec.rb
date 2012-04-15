@@ -1,4 +1,7 @@
 require 'isolated_spec_helper'
+require APP_ROOT + '/controllers/application_controller'
+require APP_ROOT + '/controllers/posts_controller'
+require APP_ROOT + '/models/post'
 
 describe PostsController do
   include FocusedController::RSpecHelper

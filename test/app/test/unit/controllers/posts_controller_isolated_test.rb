@@ -1,5 +1,7 @@
 require 'isolated_test_helper'
-require_dependency 'posts_controller'
+require APP_ROOT + '/controllers/application_controller'
+require APP_ROOT + '/controllers/posts_controller'
+require APP_ROOT + '/models/post'
 
 class PostsController
   class TestCase < ActiveSupport::TestCase
