@@ -1,4 +1,4 @@
-class PostsController
+module PostsController
   class Action < ApplicationController
   end
 

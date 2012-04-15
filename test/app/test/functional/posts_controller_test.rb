@@ -1,6 +1,6 @@
 require 'test_helper'
 
-class PostsController
+module PostsController
   class TestCase < ActionController::TestCase
     include FocusedController::FunctionalTestHelper
 

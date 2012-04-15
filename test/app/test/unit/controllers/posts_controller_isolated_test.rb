@@ -3,7 +3,7 @@ require APP_ROOT + '/controllers/application_controller'
 require APP_ROOT + '/controllers/posts_controller'
 require APP_ROOT + '/models/post'
 
-class PostsController
+module PostsController
   class TestCase < ActiveSupport::TestCase
     include FocusedController::TestHelper
     stub_url :post, :posts
