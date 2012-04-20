@@ -47,8 +47,8 @@ successfully on a production application, I'm very keen for others to
 start experimenting with it and providing feedback.
 
 Note that I will follow SemVer, and the project is currently pre-1.0, so
-there could be API changes. However if the user base grows significantly
-then I will try not to make changes too painful.
+there could be API changes. However if the user base grows significantly,
+then I will try to avoid painful changes.
 
 ## Usage ##
 
