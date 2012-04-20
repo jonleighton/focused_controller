@@ -21,15 +21,10 @@ This has two unfortunate side effects:
    define public methods in our controllers and access those in our views,
    but this will quickly get unmaintainable.
 
-2. *Action-specific APIs are needed*. For example, you might write a
-   `before_filter` which only applies to certain actions, so we have an
-   API which allows you to write `before_filter :find_post, except:
-   :index`. *If each 'action' is a separate object this is entirely
-   unnecessary*. Just use the normal methods of sharing code -- inheritance
-   and mixins -- to apply the filter to the actions which should receive
-   them. A secondary effect is that filters are often themselves
-   unnecessary; for example a `before_filter` might be replaced by a call
-   to `super` to receive some shared behaviour.
+2. *We misuse `before_filter`s to share functionality between actions*.
+   Instead of using proper OO patterns like inheritance and mixins, we
+   shoe-horn `before_filter` with `:only` or `:except` to specify chunks
+   of code that apply to several methods.
 
 Out of the box, Rails controller tests are not unit tests. They actually
 generate a Rack environment hash and send it through the full stack. This is
