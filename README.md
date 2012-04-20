@@ -34,8 +34,8 @@ This has three unfortunate side effects:
    of your actions, and rely on your acceptance/integration tests to test
    the full stack.
 
-Focused Controller aims to make controllers like any other
-object. That means they:
+Focused Controller aims to address these issues by making controllers actions
+like any other object. That means they:
 
 * Only have one reason to change
 * Are easy to instantiate, with minimal dependencies, and testable in the
