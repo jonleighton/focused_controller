@@ -53,11 +53,12 @@ then I will try to avoid painful changes.
 ## Usage ##
 
 Focused Controller changes Rails' conventions. Rather than controllers
-being objects which contain one method per action, controllers become
-namespaces which contain one class per action. Objects which wish to use
-this convention include the `FocusedController::Mixin` module. This
-means that you can start using Focused Controller in an existing
-project without having to rewrite all your controller code.
+being objects which contain one method per action, controllers are now
+simply namespaces and each action is a class within that namespace.
+Controllers which wish to use this convention simply include the
+`FocusedController::Mixin` module. This means that you can start using
+Focused Controller in an existing project without having to rewrite all
+your existing controller code.
 
 An example:
 
