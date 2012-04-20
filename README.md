@@ -12,7 +12,7 @@ Each different "action" has separate responsibilities. The "create"
 action does something entirely different to the "destroy" action, yet
 they are lumped into the same object.
 
-This has two unfortunate effects:
+This has two unfortunate side effects:
 
 1. *Instance variables are shared with the view*. We don't declare public
    methods in the controller and call them from the view, because not all
