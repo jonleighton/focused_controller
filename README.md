@@ -11,7 +11,7 @@ Each different "action" has separate responsibilities. A `create`
 action does something entirely different to a `destroy` action, yet
 they end up lumped into the same object.
 
-This has two unfortunate side effects:
+This has three unfortunate side effects:
 
 1. *We end up using instance variables to share data with our views when
    we should really be using methods*. Using instance variables for this
@@ -26,11 +26,13 @@ This has two unfortunate side effects:
    our code DRY, we shoe-horn `before_filter` with `:only` or `:except` to
    share chunks of code between actions.
 
-Out of the box, Rails controller tests are not unit tests. They actually
-generate a Rack environment hash and send it through the full stack. This is
-very slow, and rather unnecessary if you are also writing acceptance
-tests. Most of the code being exercised is in Rails rather than in your
-controllers.
+3. *Testing controllers actions is slow and unit testing them is hard*.
+   Because classical Rails controller actions are bound to 
+   ActionController::Base, you can only test them by excersinng the full
+   framework stack. This is both very slow and unnecessary. You should be
+   able to write simple unit tests that just exercice the actual behaviour
+   of your actions, and rely on your acceptance/integration tests to test
+   the full stack.
 
 Focused Controller aims to make controllers like any other
 object. That means they:
