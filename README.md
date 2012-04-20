@@ -38,8 +38,7 @@ Focused Controller aims to address these issues by making controllers actions
 like any other object. That means they:
 
 * Only have one reason to change.
-* Are easy to instantiate, with minimal dependencies, and testable in the
-  same way as any other object: by calling their methods.
+* Are easy to instantiate and test in issolation.
 
 ## Feedback needed ##
 
