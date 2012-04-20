@@ -13,13 +13,13 @@ they are lumped into the same object.
 
 This has two unfortunate side effects:
 
-1. *Instance variables are shared with the view*. We don't declare public
-   methods in the controller and call them from the view, because not all
-   of these methods would make sense for every action. Using instance
-   variables for this purpose makes it hard to change your implementation
-   and can lead to subtle bugs (for example referencing an undeclared
-   instance variable is not an error in ruby, but calling an undefined
-   method is, so you catch the mistake sooner).
+1. *We end up using instance variables to share data with our views when
+   we should really be using methods*. Using instance variables for this
+   purpose makes it harder to change your implementation and can lead to
+   subtle bugs. For example, referencing an undeclared instance variable
+   in a view will work, when it should probably raise an error. We could
+   define public methods in our controllers and access those in our views,
+   but this will quickly get unmaintainable.
 
 2. *Action-specific APIs are needed*. For example, you might write a
    `before_filter` which only applies to certain actions, so we have an
