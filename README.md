@@ -11,34 +11,29 @@ Each different "action" has separate responsibilities: A `create`
 action does something entirely different to a `destroy` action, yet
 they end up lumped into the same object.
 
-This has three unfortunate side effects:
+This has two unfortunate side effects:
 
 1. *We end up using instance variables to share data with our views when
    we should really be using methods*. Using instance variables for this
-   purpose makes it harder to change your implementation and can lead to
-   subtle bugs. For example, referencing an undeclared instance variable
-   in a view will work, when it should probably raise an error. We could
-   define public methods in our controllers and access those in our views,
-   but this will quickly get unmaintainable.
+   purpose breaks encapsulation and can lead to subtle bugs. For example,
+   an undeclared instance variable in a view will be nil, rather than
+   raising an error when referenced.
 
 2. *We misuse before_filters to share functionality between actions*.
    Instead of using proper OO patterns like inheritance and mixins to keep
    our code DRY, we shoe-horn `before_filter` with `:only` or `:except` to
    share chunks of code between specific actions.
 
-3. *Testing controller actions is slow and unit testing them is hard*.
-   Because classical Rails controller actions are bound to 
-   ActionController::Base, you can only test them by excersinng the full
-   framework stack. This is both very slow and unnecessary. You should be
-   able to write simple unit tests that just exercice the actual behaviour
-   of your actions, relying on your acceptance/integration tests to exercise
-   the full stack.
+A related problem with controllers is that the way we test them is slow
+and esoteric. Rather than calling a single method on our controller
+object and making assertions about what happened, we generate a request
+to put through the full controller stack, exercising large amounts of
+internal Rails code in each test case. These are not unit tests, yet
+they are often used to test logic.
 
-Focused Controller aims to address these issues by making controllers actions
-like any other object. That means they:
-
-* Only have one reason to change.
-* Are easy to instantiate and test in issolation.
+Focused Controller aims to address these issues by using a single, focused
+object for each action. These object should have only one responsibility
+and be straightforward to instantiate and test in isolation.
 
 ## Feedback needed ##
 
@@ -54,9 +49,10 @@ then I will try to avoid painful changes.
 
 Focused Controller changes Rails' conventions. Rather than controllers
 being classes that contain one method per action, controllers are now
-simply namespaces and each action is a class within that namespace.
-Controllers which wish to use this convention simply include the
-`FocusedController::Mixin` module. This means that you can start using
+namespaces and each action is a class within that namespace.
+
+Controllers which wish to use this convention include the
+`FocusedController::Mixin` module. This means you can start using
 Focused Controller in an existing project without having to rewrite all
 your existing controller code.
 
@@ -72,7 +68,7 @@ module PostsController
 
   class Index < Action
     def run
-      # your code here.
+      # Your code here.
     end
 
     # No instance variables are shared with the view. Instead,
