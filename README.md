@@ -64,7 +64,7 @@ An example:
 
 ``` ruby
 module PostsController
-  # Action is just used as a common superclass for all the actions
+  # Action is as a common superclass for all the actions
   # inside `PostsController`.
   class Action < ApplicationController
     include FocusedController::Mixin
@@ -111,7 +111,7 @@ get '/posts/new' => 'posts#new'
 
 will route `GET /posts/new` to `PostsController#new`.
 
-To get around this, we can use the `focused_controller_routes` helper:
+To get around this, we use the `focused_controller_routes` helper:
 
 ``` ruby
 focused_controller_routes do
@@ -212,12 +212,12 @@ depending on what's in it. For example, your `#run` method may use
 
 To make the experience smoother, Focused Controller sets up mock
 versions of these objects, much like with classical functional testing.
-It also provides accessors for these objects to your test class.
+It also provides accessors for these objects in your test class.
 
 The fact that we have to do this is an indication of high coupling
 between the controller and these other objects. In the future, I want to
-look at ways to reduce this coupling and make the testing more
-straightforward and obvious.
+look at ways to reduce this coupling and make testing more straightforward
+and obvious.
 
 In the mean time, here is an example:
 
@@ -305,8 +305,8 @@ end
 
 ## Isolated unit tests ##
 
-It is possible to completely decouple your focused controller tests from the
-Rails application. This means you don't have to pay the penalty of
+It is possible to completely decouple your focused controller tests from
+the Rails application. This means you don't have to pay the penalty of
 starting up Rails every time you want to run a test. The benefit this
 brings will depend on how coupled your controllers/tests are to other
 dependencies.
