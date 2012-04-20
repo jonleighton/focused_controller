@@ -7,9 +7,9 @@
 
 Classical Rails controllers violate the Single Responsibility Principle.
 
-Each different "action" has separate responsibilities. The "create"
-action does something entirely different to the "destroy" action, yet
-they are lumped into the same object.
+Each different "action" has separate responsibilities. A `create`
+action does something entirely different to a `destroy` action, yet
+they end up lumped into the same object.
 
 This has two unfortunate side effects:
 
