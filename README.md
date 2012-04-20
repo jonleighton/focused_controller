@@ -1,4 +1,4 @@
-# Focused Controller: Bringing Real OOP to Rails Controllers. #
+# Focused Controller: Bringing Real OOP to Rails Controllers #
 
 [![Build Status](https://secure.travis-ci.org/jonleighton/focused_controller.png?branch=master)](http://travis-ci.org/jonleighton/focused_controller)
 
@@ -7,7 +7,7 @@
 
 Classical Rails controllers violate the Single Responsibility Principle.
 
-Each different "action" has separate responsibilities. A `create`
+Each different "action" has separate responsibilities: A `create`
 action does something entirely different to a `destroy` action, yet
 they end up lumped into the same object.
 
@@ -21,17 +21,17 @@ This has three unfortunate side effects:
    define public methods in our controllers and access those in our views,
    but this will quickly get unmaintainable.
 
-2. *We misuse `before_filter`s to share functionality between actions*.
+2. *We misuse before_filters to share functionality between actions*.
    Instead of using proper OO patterns like inheritance and mixins to keep
    our code DRY, we shoe-horn `before_filter` with `:only` or `:except` to
-   share chunks of code between actions.
+   share chunks of code between specific actions.
 
-3. *Testing controllers actions is slow and unit testing them is hard*.
+3. *Testing controller actions is slow and unit testing them is hard*.
    Because classical Rails controller actions are bound to 
    ActionController::Base, you can only test them by excersinng the full
    framework stack. This is both very slow and unnecessary. You should be
    able to write simple unit tests that just exercice the actual behaviour
-   of your actions, and rely on your acceptance/integration tests to test
+   of your actions, relying on your acceptance/integration tests to exercise
    the full stack.
 
 Focused Controller aims to address these issues by making controllers actions
@@ -53,7 +53,7 @@ then I will try to avoid painful changes.
 ## Usage ##
 
 Focused Controller changes Rails' conventions. Rather than controllers
-being objects which contain one method per action, controllers are now
+being classes that contain one method per action, controllers are now
 simply namespaces and each action is a class within that namespace.
 Controllers which wish to use this convention simply include the
 `FocusedController::Mixin` module. This means that you can start using
@@ -64,7 +64,7 @@ An example:
 
 ``` ruby
 module PostsController
-  # Action is as a common superclass for all the actions
+  # Action is a common superclass for all the actions
   # inside `PostsController`.
   class Action < ApplicationController
     include FocusedController::Mixin
@@ -72,7 +72,7 @@ module PostsController
 
   class Index < Action
     def run
-      # your code here
+      # your code here.
     end
 
     # No instance variables are shared with the view. Instead,
@@ -102,8 +102,8 @@ end
 
 ## Routing ##
 
-Rails' routing assumes your actions are methods inside an object whose
-name ends with 'controller'. For example:
+Rails' normal routing assumes your actions are methods inside an object
+whose name ends with 'controller'. For example:
 
 ``` ruby
 get '/posts/new' => 'posts#new'
@@ -127,7 +127,7 @@ This is similar to writing:
 get '/posts/new' => proc { |env| PostsController::New.call(env) }
 ```
 
-All the normal routing macros are supported:
+All the normal routing macros are also supported:
 
 ``` ruby
 focused_controller_routes do
@@ -178,7 +178,7 @@ end
 ## Unit Testing ##
 
 A better way to test your controllers is with unit tests. This involves
-creating an instance of your action object and calling methods on it. For
+creating an instance of your action class and calling methods on it. For
 example, to test that your `user` method finds the correct user, you
 might write:
 
