@@ -22,9 +22,9 @@ This has two unfortunate side effects:
    but this will quickly get unmaintainable.
 
 2. *We misuse `before_filter`s to share functionality between actions*.
-   Instead of using proper OO patterns like inheritance and mixins, we
-   shoe-horn `before_filter` with `:only` or `:except` to specify chunks
-   of code that apply to several methods.
+   Instead of using proper OO patterns like inheritance and mixins to keep
+   our code DRY, we shoe-horn `before_filter` with `:only` or `:except` to
+   share chunks of code between actions.
 
 Out of the box, Rails controller tests are not unit tests. They actually
 generate a Rack environment hash and send it through the full stack. This is
