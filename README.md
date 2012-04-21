@@ -171,6 +171,12 @@ describe UsersController do
 end
 ```
 
+Don't forget to add the line below to your spec_helper.rb file:
+
+``` ruby
+require 'focused_controller/rspec_functional_helper'
+```
+
 ## Unit Testing ##
 
 A better way to test your controllers is with unit tests. This involves
@@ -297,6 +303,12 @@ describe UsersController do
     end
   end
 end
+```
+
+Don't forget to add the line below to your spec_helper.rb file:
+
+``` ruby
+require 'focused_controller/rspec_helper'
 ```
 
 ## Isolated unit tests ##
