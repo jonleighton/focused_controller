@@ -45,7 +45,8 @@ Note that I will follow SemVer, and the project is currently pre-1.0, so
 there could be API changes. However if the user base grows significantly,
 then I will try to avoid painful changes.
 
-You can speak about focused_controller and send feedback on his [google group](http://groups.google.com/group/focused_controller)
+There is a [mailing list](http://groups.google.com/group/focused_controller)
+for discussion.
 
 ## Usage ##
 
