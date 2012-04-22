@@ -350,9 +350,9 @@ styles:
 ## More examples ##
 
 The [acceptance
-tests](https://github.com/jonleighton/focused_controller/test/acceptance)
+tests](https://github.com/jonleighton/focused_controller/tree/master/test/acceptance)
 for Focused Controller exercise a [complete Rails
-application](https://github.com/jonleighton/focused_controller/test/app),
+application](https://github.com/jonleighton/focused_controller/tree/master/test/app),
 which uses the plugin. Therefore, you might wish to look there to get
 more of an idea about how it can be used.
 
