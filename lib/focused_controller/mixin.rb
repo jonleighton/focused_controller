@@ -20,6 +20,20 @@ module FocusedController
       def call(env)
         action(FocusedController.action_name).call(env)
       end
+
+      def expose(name, &block)
+        define_method(name) do |*args|
+          ivar = "@#{name}"
+
+          if instance_variable_defined?(ivar)
+            instance_variable_get(ivar)
+          else
+            instance_variable_set(ivar, instance_exec(block, *args, &block))
+          end
+        end
+
+        helper_method name
+      end
     end
 
     def action_name

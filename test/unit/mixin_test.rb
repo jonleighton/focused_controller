@@ -66,5 +66,60 @@ module FocusedController
         subject.run.must_equal nil
       end
     end
+
+    describe '.expose' do
+      subject do
+        @klass = Class.new do
+          include FocusedController::Mixin
+
+          @helper_methods = []
+
+          class << self
+            attr_reader :helper_methods
+
+            def helper_method(name)
+              @helper_methods << name
+            end
+          end
+        end
+      end
+
+      it 'defines a method' do
+        subject.expose(:foo) { 'bar' }
+        subject.new.foo.must_equal 'bar'
+      end
+
+      it 'declares the method a helper method' do
+        subject.expose(:foo) { 'bar' }
+        subject.helper_methods.must_equal [:foo]
+      end
+
+      it 'memoizes the result' do
+        count = 0
+        counter = proc { count += 1 }
+        subject.expose(:foo) { counter.call }
+
+        obj = subject.new
+        obj.foo.must_equal 1
+        obj.foo.must_equal 1
+      end
+
+      it 'it memoizes falsey values' do
+        val = true
+        meth = proc { val = !val }
+        subject.expose(:foo) { meth.call }
+
+        obj = subject.new
+        obj.foo.must_equal false
+        obj.foo.must_equal false
+      end
+
+      it 'instance evals the block' do
+        subject.expose(:foo) { @bar }
+        obj = subject.new
+        obj.instance_variable_set('@bar', 'bar')
+        obj.foo.must_equal 'bar'
+      end
+    end
   end
 end

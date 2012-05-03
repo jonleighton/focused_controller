@@ -91,10 +91,13 @@ module PostsController
   # implementation inherited from `FocusedController::Mixin` is an
   # empty method.
   class Show < Action
-    def post
-      @post ||= Post.find params[:id]
-    end
-    helper_method :post
+    # Here's a shorter way to declare a method that is also a
+    # helper_method
+    expose(:post) { Post.find params[:id] }
+
+    # You can also call expose without a block, in which case an
+    # attr_reader and a helper_method are declared
+    expose :first_comment
   end
 end
 ```

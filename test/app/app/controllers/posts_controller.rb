@@ -3,35 +3,17 @@ module PostsController
   end
 
   class Index < Action
-    def posts
-      @posts ||= Post.all
-    end
-    helper_method :posts
+    expose(:posts) { Post.all }
   end
 
-  class Singular < Action
-    def post
-      @post ||= begin
-        if params[:id]
-          Post.find(params[:id])
-        else
-          Post.new(params[:post])
-        end
-      end
-    end
-    helper_method :post
+  class Initializer < Action
+    expose(:post) { Post.new params[:post] }
   end
 
-  class Show < Singular
+  class New < Initializer
   end
 
-  class New < Singular
-  end
-
-  class Edit < Singular
-  end
-
-  class Create < Singular
+  class Create < Initializer
     def run
       if post.save
         redirect_to post, :notice => 'Post was successfully created.'
@@ -41,7 +23,17 @@ module PostsController
     end
   end
 
-  class Update < Singular
+  class Finder < Action
+    expose(:post) { Post.find params[:id] }
+  end
+
+  class Show < Finder
+  end
+
+  class Edit < Finder
+  end
+
+  class Update < Finder
     def run
       if post.update_attributes(params[:post])
         redirect_to post, :notice => 'Post was successfully updated.'
@@ -51,7 +43,7 @@ module PostsController
     end
   end
 
-  class Destroy < Singular
+  class Destroy < Finder
     def run
       post.destroy
       redirect_to posts_url
