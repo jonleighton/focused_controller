@@ -120,6 +120,15 @@ module FocusedController
         obj.instance_variable_set('@bar', 'bar')
         obj.foo.must_equal 'bar'
       end
+
+      it 'declares an attr_reader when called without a block' do
+        subject.expose :foo
+        subject.helper_methods.must_equal [:foo]
+
+        obj = subject.new
+        obj.instance_variable_set('@foo', 'bar')
+        obj.foo.must_equal 'bar'
+      end
     end
   end
 end

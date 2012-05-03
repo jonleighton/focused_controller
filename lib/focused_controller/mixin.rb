@@ -22,14 +22,18 @@ module FocusedController
       end
 
       def expose(name, &block)
-        define_method(name) do |*args|
-          ivar = "@#{name}"
+        if block_given?
+          define_method(name) do |*args|
+            ivar = "@#{name}"
 
-          if instance_variable_defined?(ivar)
-            instance_variable_get(ivar)
-          else
-            instance_variable_set(ivar, instance_exec(block, *args, &block))
+            if instance_variable_defined?(ivar)
+              instance_variable_get(ivar)
+            else
+              instance_variable_set(ivar, instance_exec(block, *args, &block))
+            end
           end
+        else
+          attr_reader name
         end
 
         helper_method name
