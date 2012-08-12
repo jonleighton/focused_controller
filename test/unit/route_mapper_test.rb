@@ -27,7 +27,8 @@ module FocusedController
     it 'creates routes that map to focused controllers' do
       route_set.draw do
         focused_controller_routes do
-          match 'posts' => 'PostsController::Index'
+          match 'posts'     => 'PostsController::Index'
+          match 'posts/all' => 'posts#index'
 
           resources :comments do
             resources :replies
@@ -43,6 +44,7 @@ module FocusedController
 
       mappings = {
         [:get, '/posts']              => 'PostsController::Index',
+        [:get, '/posts/all']          => 'PostsController::Index',
         [:get, '/comments']           => 'CommentsController::Index',
         [:get, '/comments/4']         => 'CommentsController::Show',
         [:put, '/comments/4']         => 'CommentsController::Update',
