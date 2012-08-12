@@ -48,6 +48,10 @@ module FocusedController
         subject.action_name.must_equal 'show'
       end
 
+      it "has a #controller_name of 'posts'" do
+        subject.controller_name.must_equal 'posts'
+      end
+
       it "uses the call method for the action" do
         subject.method_for_action('whatever').must_equal 'call'
       end

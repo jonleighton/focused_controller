@@ -38,6 +38,10 @@ module FocusedController
 
         helper_method name
       end
+
+      def controller_name
+        name.split('::')[-2].sub(/Controller$/, '').underscore
+      end
     end
 
     def action_name
