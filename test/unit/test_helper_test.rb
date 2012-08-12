@@ -9,7 +9,7 @@ module FocusedController
       end
 
       class Index < Action
-        def run
+        def call
           if params[:omg]
             "omg"
           elsif params[:set_session]

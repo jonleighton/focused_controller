@@ -34,9 +34,9 @@ module FocusedController
         klass.controller_path.must_equal 'posts'
       end
 
-      it "has a .call which dispatches the #run action" do
+      it "has a .call which dispatches the #call action" do
         def klass.action(name)
-          if name.to_s == 'run'
+          if name.to_s == 'call'
             proc { |env| "omg" }
           end
         end
@@ -48,8 +48,8 @@ module FocusedController
         subject.action_name.must_equal 'show'
       end
 
-      it "uses the run method for the action" do
-        subject.method_for_action('whatever').must_equal 'run'
+      it "uses the call method for the action" do
+        subject.method_for_action('whatever').must_equal 'call'
       end
 
       it "removes all view assigns by default" do
@@ -62,8 +62,8 @@ module FocusedController
         subject.view_assigns['foo'].must_equal('bar')
       end
 
-      it "has a #run method by default" do
-        subject.run.must_equal nil
+      it "has a #call method by default" do
+        subject.call.must_equal nil
       end
     end
 

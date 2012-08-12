@@ -114,7 +114,7 @@ module FocusedController
       controller.params = params        if params
       controller.session.update session if session
       controller.flash.update flash     if flash
-      controller.run
+      controller.send(FocusedController.action_name)
     end
 
     def session

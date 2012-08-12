@@ -56,7 +56,7 @@ module FocusedController
       end
     end
 
-    def run
+    def call
     end
   end
 end

@@ -14,7 +14,7 @@ module PostsController
   end
 
   class Create < Initializer
-    def run
+    def call
       if post.save
         redirect_to post, :notice => 'Post was successfully created.'
       else
@@ -34,7 +34,7 @@ module PostsController
   end
 
   class Update < Finder
-    def run
+    def call
       if post.update_attributes(params[:post])
         redirect_to post, :notice => 'Post was successfully updated.'
       else
@@ -44,7 +44,7 @@ module PostsController
   end
 
   class Destroy < Finder
-    def run
+    def call
       post.destroy
       redirect_to posts_url
     end

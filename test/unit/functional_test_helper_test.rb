@@ -4,7 +4,7 @@ require 'action_controller'
 
 module FocusedController
   module FunctionalTestHelper
-    class FakePostsController
+    module FakePostsController
       class Action < ActionController::Base; end
       class Index < Action; end
       class Show < Action; end
@@ -46,19 +46,19 @@ module FocusedController
         end
 
         subject.get :foo, :bar, :baz
-        subject.last_process.must_equal ['run', :foo, :bar, :baz, 'GET']
+        subject.last_process.must_equal ['call', :foo, :bar, :baz, 'GET']
 
         subject.post :foo, :bar, :baz
-        subject.last_process.must_equal ['run', :foo, :bar, :baz, 'POST']
+        subject.last_process.must_equal ['call', :foo, :bar, :baz, 'POST']
 
         subject.put :foo, :bar, :baz
-        subject.last_process.must_equal ['run', :foo, :bar, :baz, 'PUT']
+        subject.last_process.must_equal ['call', :foo, :bar, :baz, 'PUT']
 
         subject.delete :foo, :bar, :baz
-        subject.last_process.must_equal ['run', :foo, :bar, :baz, 'DELETE']
+        subject.last_process.must_equal ['call', :foo, :bar, :baz, 'DELETE']
 
         subject.head :foo, :bar, :baz
-        subject.last_process.must_equal ['run', :foo, :bar, :baz, 'HEAD']
+        subject.last_process.must_equal ['call', :foo, :bar, :baz, 'HEAD']
       end
     end
   end
