@@ -115,8 +115,10 @@ will route `GET /posts/new` to `PostsController#new`.
 To get around this, we use the `focused_controller_routes` helper:
 
 ``` ruby
-focused_controller_routes do
-  get '/posts/new' => 'posts#new'
+Loco2::Application.routes.draw do
+  focused_controller_routes do
+    get '/posts/new' => 'posts#new'
+  end
 end
 ```
 
