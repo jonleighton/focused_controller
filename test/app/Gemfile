@@ -2,5 +2,5 @@ source 'http://rubygems.org'
 
 gem 'rails', ENV['RAILS_VERSION'] || '~> 3.2.1'
 gem 'focused_controller', :path => '../..'
-gem 'rspec', '~> 2.8'
-gem 'rspec-rails', '~> 2.8'
+gem 'rspec'
+gem 'rspec-rails'
