@@ -110,13 +110,6 @@ module FocusedController
       @response ||= TestResponse.new
     end
 
-    def req(params = nil, session = nil, flash = nil)
-      controller.params = params        if params
-      controller.session.update session if session
-      controller.flash.update flash     if flash
-      controller.send(FocusedController.action_name)
-    end
-
     def session
       controller.session
     end

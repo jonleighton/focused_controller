@@ -9,7 +9,7 @@ describe PostsController do
 
   describe PostsController::Index do
     it "should get index" do
-      req
+      subject.call
       response.should be_success
       subject.posts.should_not be(:nil)
     end
@@ -17,42 +17,47 @@ describe PostsController do
 
   describe PostsController::New do
     it "should get new" do
-      req
+      subject.call
       response.should be_success
     end
   end
 
   describe PostsController::Create do
     it "should create post" do
-      expect { req :post => @post.attributes }.to change(Post, :count).by(1)
+      subject.params = { :post => @post.attributes }
+      expect { subject.call }.to change(Post, :count).by(1)
       response.should redirect_to(post_path(subject.post))
     end
   end
 
   describe PostsController::Show do
     it "should show post" do
-      req :id => @post.id
+      subject.params = { :id => @post.id }
+      subject.call
       response.should be_success
     end
   end
 
   describe PostsController::Edit do
     it "should get edit" do
-      req :id => @post.id
+      subject.params = { :id => @post.id }
+      subject.call
       response.should be_success
     end
   end
 
   describe PostsController::Update do
     it "should update post" do
-      req :id => @post.id
+      subject.params = { :id => @post.id }
+      subject.call
       response.should redirect_to(post_path(subject.post))
     end
   end
 
   describe PostsController::Destroy do
     it "should destroy post" do
-      expect { req :id => @post.id }.to change(Post, :count).by(-1)
+      subject.params = { :id => @post.id }
+      expect { subject.call }.to change(Post, :count).by(-1)
       response.should redirect_to(posts_path)
     end
   end

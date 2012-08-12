@@ -11,7 +11,7 @@ module PostsController
 
   class IndexTest < TestCase
     test "should get index" do
-      req
+      controller.call
       assert_response :success
       assert_not_nil controller.posts
     end
@@ -19,15 +19,17 @@ module PostsController
 
   class NewTest < TestCase
     test "should get new" do
-      req
+      controller.call
       assert_response :success
     end
   end
 
   class CreateTest < TestCase
     test "should create post" do
+      controller.params = { :post => @post.attributes }
+
       assert_difference('Post.count') do
-        req :post => @post.attributes
+        controller.call
       end
 
       assert_redirected_to post_path(controller.post)
@@ -36,29 +38,34 @@ module PostsController
 
   class ShowTest < TestCase
     test "should show post" do
-      req :id => @post.id
+      controller.params = { :id => @post.id }
+      controller.call
       assert_response :success
     end
   end
 
   class EditTest < TestCase
     test "should get edit" do
-      req :id => @post.id
+      controller.params = { :id => @post.id }
+      controller.call
       assert_response :success
     end
   end
 
   class UpdateTest < TestCase
     test "should update post" do
-      req :id => @post.id
+      controller.params = { :id => @post.id }
+      controller.call
       assert_redirected_to post_path(controller.post)
     end
   end
 
   class DestroyTest < TestCase
     test "should destroy post" do
+      controller.params = { :id => @post.id }
+
       assert_difference('Post.count', -1) do
-        req :id => @post.id
+        controller.call
       end
 
       assert_redirected_to posts_path

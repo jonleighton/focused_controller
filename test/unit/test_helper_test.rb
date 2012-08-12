@@ -86,6 +86,8 @@ module FocusedController
         end
       end
 
+      let(:controller) { subject.controller }
+
       subject { FakePostsController::IndexTest.new }
 
       def must_fail(&block)
@@ -149,13 +151,17 @@ module FocusedController
       end
 
       it 'supports session' do
-        subject.req(:set_session => true)
+        controller.params = { :set_session => true }
+        controller.call
+
         subject.session[:foo].must_equal 'omg'
         subject.session['foo'].must_equal 'omg'
       end
 
       it 'supports flash' do
-        subject.req(:set_flash => true)
+        controller.params = { :set_flash => true }
+        controller.call
+
         subject.flash[:foo].must_equal 'omg'
 
         # This is consistent with the behaviour of standard rails functional tests
@@ -163,40 +169,10 @@ module FocusedController
       end
 
       it 'supports cookies' do
-        subject.req(:set_cookie => true)
+        controller.params = { :set_cookie => true }
+        controller.call
+
         subject.cookies[:foo].must_equal 'omg'
-      end
-
-      describe "#req" do
-        it "sets params and calls the controller's #run" do
-          subject.req(:omg => true).must_equal 'omg'
-        end
-
-        it 'sets session' do
-          subject.req(nil, { :foo => 'bar' })
-          subject.session[:foo].must_equal 'bar'
-        end
-
-        it 'set flash' do
-          subject.req(nil, nil, { :foo => 'bar' })
-          subject.flash[:foo].must_equal 'bar'
-        end
-
-        it "doesn't overwrite existing params, session, or flash if new ones aren't provided" do
-          subject.controller.params[:param] = true
-          subject.controller.flash[:flash] = true
-          subject.controller.session[:session] = true
-
-          subject.req
-
-          subject.controller.params[:param].must_equal true
-          subject.controller.flash[:flash].must_equal true
-          subject.controller.session[:session].must_equal true
-
-          subject.req({})
-
-          subject.controller.params[:param].must_equal(nil)
-        end
       end
 
       describe 'url stubbing' do
