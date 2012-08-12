@@ -8,8 +8,8 @@ Gem::Specification.new do |s|
   s.authors     = ["Jon Leighton"]
   s.email       = ["j@jonathanleighton.com"]
   s.homepage    = "http://github.com/jonleighton/focused_controller"
-  s.summary     = %q{Write Rails controllers that don't violate SRP}
-  s.description = %q{Write Rails controllers that don't violate SRP}
+  s.summary     = %q{Write Rails controllers with one class per action}
+  s.description = %q{Write Rails controllers with one class per action}
 
   s.rubyforge_project = "focused_controller"
 
