@@ -1,19 +1,13 @@
 module PostsController
-  class Action < ApplicationController
-  end
-
-  class Index < Action
+  class Index < ApplicationController
     expose(:posts) { Post.all }
   end
 
-  class Initializer < Action
+  class New < ApplicationController
     expose(:post) { Post.new params[:post] }
   end
 
-  class New < Initializer
-  end
-
-  class Create < Initializer
+  class Create < New
     def call
       if post.save
         redirect_to post, :notice => 'Post was successfully created.'
@@ -23,17 +17,14 @@ module PostsController
     end
   end
 
-  class Finder < Action
+  class Show < ApplicationController
     expose(:post) { Post.find params[:id] }
   end
 
-  class Show < Finder
+  class Edit < Show
   end
 
-  class Edit < Finder
-  end
-
-  class Update < Finder
+  class Update < Edit
     def call
       if post.update_attributes(params[:post])
         redirect_to post, :notice => 'Post was successfully updated.'
@@ -43,7 +34,7 @@ module PostsController
     end
   end
 
-  class Destroy < Finder
+  class Destroy < Edit
     def call
       post.destroy
       redirect_to posts_url
