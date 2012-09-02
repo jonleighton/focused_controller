@@ -13,8 +13,13 @@ module FocusedController
       options = @options.dup
 
       if to = to_option
-        options[:to]     = FocusedController::Route.new(to)
-        options[:action] = FocusedController.action_name # necessary for rails <= 3.1
+        options[:to]         = FocusedController::Route.new(to)
+
+        # This causes rails to spit out a bit of extra useful information in the case
+        # of a routing error. The :action option is also necessary for the routing to
+        # work on Rails <= 3.1.
+        options[:action]     = FocusedController.action_name
+        options[:controller] = to.underscore
       end
 
       options

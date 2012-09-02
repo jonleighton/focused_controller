@@ -56,7 +56,8 @@ module FocusedController
       mappings.each do |(method, path), controller|
         route = recognize(path, :method => method)
         route.app.name.must_equal controller
-        route.defaults[:action].must_equal 'call'
+        route.defaults[:action].must_equal FocusedController.action_name
+        route.defaults[:controller].must_equal controller.underscore
       end
     end
 
