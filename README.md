@@ -17,19 +17,25 @@ for discussion.
 
 ``` ruby
 class ApplicationController
-  include FocusedController::Mixin
+  class Action < ApplicationController
+    include FocusedController::Mixin
+  end
 end
 
 module PostsController
-  class Index < ApplicationController
+  class Action < ApplicationController::Action
+    before_filter :authenticate
+  end
+
+  class Index < Action
     expose(:posts) { Post.recent.limit(5) }
   end
 
-  class New < ApplicationController
+  class New < Action
     expose(:post) { Post.new }
   end
 
-  class Singular < ApplicationController
+  class Singular < Action
     expose(:post) { Post.find params[:id] }
     before_filter { redirect_to root_path unless post.accessible_to?(current_user) }
   end
@@ -49,22 +55,19 @@ module PostsController
 end
 ```
 
-Some notes:
+You can include `FocusedController::Mixin` anywhere, so you don't have
+to use Focused Controller in every single controller if you don't want
+to. I find it useful to define `ApplicationController::Action` and
+inherit from that where needed.
 
-* You can include `FocusedController::Mixin` anywhere, so you don't have
-  to use Focused Controller in every single controller if you don't want
-  to
-* `expose` makes the object returned by the block available in your view
-  template. It also memoizes the result so the block will only be
-  executed once.
-* It is not necessary to specify `:only` or `:except` on the before
-  filter, since we declare the filter for exactly the actions we want it
-  to run on. Rails has many methods which accept action names to limit
-  what they get applied to - this is basically irrelevant with Focused
-  Controller due to the increased granularity that having a class for each
-  action gives us.
-* The `#call` method is what gets invoked when the action runs, so put
-  the 'active ingredients' in here.
+The `#call` method is what gets invoked when the request is served.
+
+The `#expose` declaration defines a method which runs the block and
+memoizes the result. It also makes `post` a helper method so you can
+call it from the view template.
+
+The `before_filter` in Singular is inherited by precisely the actions
+that need it, so we don't need to specify `:only` or `:except`.
 
 ## Routing ##
 
@@ -224,7 +227,7 @@ describe UsersController do
   include FocusedController::RSpecHelper
 
   describe UsersController::Create do
-    test "should create user" do
+    it "creates a user" do
       subject.params = { user: { name: 'Jon' } }
       expect { subject.call }.to change(User, :count).by(1)
       response.should redirect_to(user_path(subject.user))
