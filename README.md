@@ -10,6 +10,9 @@ Focused Controller also provides test helpers which enable you to write unit
 tests for your controller code. This is much faster than functional testing,
 and better suited to testing fine grained logic that may exist in your actions.
 
+[I wrote a blog post to fully explain the
+idea](http://jonathanleighton.com/articles/2012/explaining-focused-controller/).
+
 There is a [mailing list](http://groups.google.com/group/focused_controller)
 for discussion.
 
