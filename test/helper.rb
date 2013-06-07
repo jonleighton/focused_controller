@@ -19,8 +19,17 @@ end
 # can, and capybara/rails assumes there is a full rails env present. So this is a
 # hack to make it not fail.
 module Rails
+  module VERSION
+    MAJOR = 3
+    MINOR = 0
+    TINY  = 0
+    PRE   = ""
+
+    STRING = [MAJOR, MINOR, TINY, PRE].compact.join(".")
+  end
+
   def self.version
-    '3.0'
+    VERSION::STRING
   end
 
   def self.root
