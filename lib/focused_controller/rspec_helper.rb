@@ -7,7 +7,6 @@ begin
   # haven't specifically chosen to receive it.
   require 'rspec/rails/matchers'
   require 'rspec/rails/adapters'
-  require 'rspec/rails/example/rails_example_group'
 rescue LoadError
 end
 
@@ -26,7 +25,9 @@ module FocusedController
     end
 
     if defined?(RSpec::Rails)
-      include RSpec::Rails::RailsExampleGroup
+      include RSpec::Rails::SetupAndTeardownAdapter
+      include RSpec::Rails::TestUnitAssertionAdapter
+      include RSpec::Rails::Matchers
       include RSpec::Rails::Matchers::RedirectTo
       include RSpec::Rails::Matchers::RenderTemplate
     end
