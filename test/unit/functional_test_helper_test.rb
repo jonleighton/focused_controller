@@ -45,20 +45,57 @@ module FocusedController
           end
         end
 
-        subject.get :foo, :bar, :baz
-        subject.last_process.must_equal ['call', :foo, :bar, :baz, 'GET']
+        parameters = {:foo => "bar"}
+        session = {:baz => "bat"}
+        flash = {:quux => "wibble"}
 
-        subject.post :foo, :bar, :baz
-        subject.last_process.must_equal ['call', :foo, :bar, :baz, 'POST']
 
-        subject.put :foo, :bar, :baz
-        subject.last_process.must_equal ['call', :foo, :bar, :baz, 'PUT']
+        subject.get parameters, session, flash
+        subject.last_process.must_equal ['call', parameters, session, flash, 'GET']
 
-        subject.delete :foo, :bar, :baz
-        subject.last_process.must_equal ['call', :foo, :bar, :baz, 'DELETE']
+        subject.post parameters, session, flash
+        subject.last_process.must_equal ['call', parameters, session, flash, 'POST']
 
-        subject.head :foo, :bar, :baz
-        subject.last_process.must_equal ['call', :foo, :bar, :baz, 'HEAD']
+        subject.put parameters, session, flash
+        subject.last_process.must_equal ['call', parameters, session, flash, 'PUT']
+
+        subject.delete parameters, session, flash
+        subject.last_process.must_equal ['call', parameters, session, flash, 'DELETE']
+
+        subject.head parameters, session, flash
+        subject.last_process.must_equal ['call', parameters, session, flash, 'HEAD']
+      end
+
+
+      describe "testing a non-focused controller" do
+        it "allows using the action name to dispatch the action" do
+          subject.singleton_class.class_eval do
+            attr_reader :last_process
+
+            def process(*args)
+              @last_process = args
+            end
+          end
+
+          parameters = {:foo => "bar"}
+          session = {:baz => "bat"}
+          flash = {:quux => "wibble"}
+
+          subject.get :show, parameters, session, flash
+          subject.last_process.must_equal [:show, parameters, session, flash, 'GET']
+
+          subject.post :create, parameters, session, flash
+          subject.last_process.must_equal [:create, parameters, session, flash, 'POST']
+
+          subject.put :update, parameters, session, flash
+          subject.last_process.must_equal [:update, parameters, session, flash, 'PUT']
+
+          subject.delete :destroy, parameters, session, flash
+          subject.last_process.must_equal [:destroy, parameters, session, flash, 'DELETE']
+
+          subject.head :show, parameters, session, flash
+          subject.last_process.must_equal [:show, parameters, session, flash, 'HEAD']
+        end
       end
     end
   end
