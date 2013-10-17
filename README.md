@@ -111,6 +111,7 @@ to be called as it would always be `#call`. So this is omitted:
 
 ``` ruby
 require 'focused_controller/functional_test_helper'
+require_dependency 'users_controller'
 
 module UsersController
   class CreateTest < ActionController::TestCase
@@ -184,6 +185,7 @@ It also provides accessors for these objects in your test class.
 
 ``` ruby
 require 'focused_controller/test_helper'
+require_dependency 'users_controller'
 
 module UsersController
   class CreateTest < ActiveSupport::TestCase

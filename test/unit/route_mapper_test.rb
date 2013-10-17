@@ -27,8 +27,8 @@ module FocusedController
     it 'creates routes that map to focused controllers' do
       route_set.draw do
         focused_controller_routes do
-          match 'posts'     => 'PostsController::Index'
-          match 'posts/all' => 'posts#index'
+          get 'posts'     => 'PostsController::Index'
+          get 'posts/all' => 'posts#index'
 
           resources :comments do
             resources :replies
@@ -67,7 +67,7 @@ module FocusedController
 
       route_set.draw do
         focused_controller_routes do
-          match 'posts' => app
+          get 'posts' => app
         end
       end
       recognize('/posts').app.must_equal app

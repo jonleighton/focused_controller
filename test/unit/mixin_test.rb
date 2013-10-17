@@ -30,8 +30,8 @@ module FocusedController
 
       subject { klass.new }
 
-      it "has a .controller_path of 'posts'" do
-        klass.controller_path.must_equal 'posts'
+      it "has a .focused_controller_path of 'posts'" do
+        klass.focused_controller_path.must_equal 'posts'
       end
 
       it "has a .call which dispatches the #call action" do

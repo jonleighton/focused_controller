@@ -1,3 +1,5 @@
+require 'active_model'
+
 class Post
   extend ActiveModel::Naming
   include ActiveModel::Validations

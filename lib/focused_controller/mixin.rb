@@ -13,7 +13,7 @@ module FocusedController
     end
 
     module ClassMethods
-      def controller_path
+      def focused_controller_path
         @focused_controller_path ||= name && name.sub(/\:\:[^\:]+$/, '').sub(/Controller$/, '').underscore
       end
 
@@ -42,6 +42,10 @@ module FocusedController
       def controller_name
         name.split('::')[-2].sub(/Controller$/, '').underscore
       end
+    end
+
+    def _prefixes
+      super.dup.unshift(self.class.focused_controller_path)
     end
 
     def action_name

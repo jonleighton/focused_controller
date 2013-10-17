@@ -28,7 +28,7 @@ module FocusedController
     end
 
     def cookie_jar
-      @cookie_jar ||= ActionDispatch::Cookies::CookieJar.new
+      @cookie_jar ||= ActionDispatch::Cookies::CookieJar.build(self)
     end
 
     def flash
@@ -56,6 +56,10 @@ module FocusedController
     # Deals with _compute_redirect_to_location in action_controller/metal/redirecting
     # (I don't feel proud about this...)
     def gsub(*)
+      self
+    end
+
+    def delete(*)
       self
     end
 
@@ -171,6 +175,10 @@ module FocusedController
           end
         end
       end
+    end
+
+    def optimize_routes_generation?(*)
+      false
     end
   end
 end

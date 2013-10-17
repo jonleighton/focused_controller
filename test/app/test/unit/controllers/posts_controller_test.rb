@@ -1,4 +1,5 @@
 require 'test_helper'
+require_dependency 'posts_controller'
 
 module PostsController
   class TestCase < ActiveSupport::TestCase
