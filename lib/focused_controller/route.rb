@@ -1,5 +1,7 @@
+require "action_dispatch/routing"
+
 module FocusedController
-  class Route
+  class Route < ActionDispatch::Routing::RouteSet::Dispatcher
     attr_reader :name
 
     def initialize(name)

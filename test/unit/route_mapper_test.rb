@@ -72,5 +72,23 @@ module FocusedController
       end
       recognize('/posts').app.must_equal app
     end
+
+    it "generates a route with url_for" do
+      route_set.draw do
+        focused_controller_routes do
+          resources :posts
+
+          namespace :admin do
+            resources :comments
+          end
+        end
+      end
+
+      path = route_set.url_for(controller: "posts_controller/index", action: "call", page: "2", only_path: true)
+      path.must_equal "/posts?page=2"
+
+      path = route_set.url_for(controller: "admin/comments_controller/show", action: "call", id: "62", page: "2", only_path: true)
+      path.must_equal "/admin/comments/62?page=2"
+    end
   end
 end
