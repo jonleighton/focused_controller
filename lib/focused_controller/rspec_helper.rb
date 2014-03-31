@@ -5,6 +5,7 @@ begin
   # Requiring specific files rather than just 'rspec/rails' because I don't
   # want to force the configuration that 'rspec/rails' adds on people if they
   # haven't specifically chosen to receive it.
+  require 'rails/version' unless defined?(Rails)
   require 'rspec/rails/matchers'
   require 'rspec/rails/adapters'
 rescue LoadError
