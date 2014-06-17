@@ -1,4 +1,7 @@
 require 'bundler/setup'
+gem 'minitest'
+require 'active_support'
+require 'minitest/autorun'
 require 'test/unit/testcase'
 require 'active_support/test_case'
 require 'minitest/spec'
