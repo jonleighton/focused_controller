@@ -165,7 +165,11 @@ module FocusedController
         subject.flash[:foo].must_equal 'omg'
 
         # This is consistent with the behaviour of standard rails functional tests
-        subject.flash['foo'].must_equal nil
+        if Gem::Version.new(Rails::VERSION::STRING) < Gem::Version.new('4.1.0')
+          subject.flash['foo'].must_equal nil
+        else
+          subject.flash['foo'].must_equal 'omg'
+        end
       end
 
       it 'supports cookies' do
