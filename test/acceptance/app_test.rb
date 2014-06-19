@@ -66,7 +66,13 @@ describe 'acceptance test' do
   # actually run the test.
   def start_server
     within_test_app do
-      IO.popen("bundle exec rails s -p #{FocusedController::Test.port} 2>&1") do |out|
+      command = if Gem::Version.new(Rails::VERSION::STRING) < Gem::Version.new('4.1.0')
+                  "bundle exec rails s -p #{FocusedController::Test.port} 2>&1"
+                else
+                  "./bin/rails s -p #{FocusedController::Test.port} 2>&1"
+                end
+
+      IO.popen(command) do |out|
         start   = Time.now
         started = false
         output  = ""
