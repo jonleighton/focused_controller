@@ -1,5 +1,4 @@
 require 'bundler/setup'
-require 'test/unit'
 require 'active_support/test_case'
 require 'focused_controller/test_helper'
 

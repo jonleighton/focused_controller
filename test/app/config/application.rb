@@ -11,6 +11,7 @@ module App
     config.encoding = "utf-8"
   end
 end
+I18n.enforce_available_locales = false
 
 # Check out the awesome database
 POSTS = []
