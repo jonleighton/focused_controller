@@ -1,3 +1,7 @@
+## Version 1.2.1 ##
+
+* Fix gemspec
+
 ## Version 1.2.0 ##
 
 * Rails 4.1 support
