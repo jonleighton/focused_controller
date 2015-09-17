@@ -15,7 +15,8 @@ module FocusedController
       if to = to_option
         options[:action]     = FocusedController.action_name
         options[:controller] = to.underscore
-        options[:to]         = nil
+
+        options.delete :to
       end
 
       options
@@ -30,10 +31,10 @@ module FocusedController
         else
           @options[:to]
         end
-      elsif @options[:action] && @scope[:controller]
-        stringify_controller_and_action(@scope[:controller], @options[:action])
       elsif @options[:controller]
         @options[:controller]
+      elsif @options[:action] && @scope[:controller]
+        stringify_controller_and_action(@scope[:controller], @options[:action])
       end
     end
 

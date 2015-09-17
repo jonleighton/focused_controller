@@ -12,11 +12,13 @@ module FocusedController
       method = (environment[:method] || "GET").to_s.upcase
       env    = Rack::MockRequest.env_for(path, {:method => method})
       req    = route_set.request_class.new(env)
-      router = route_set.router # Rails 3.2+
+      router = route_set.router
 
       router.recognize(req) do |route, matches, params|
         return route
       end
+
+      raise ArgumentError, "'#{path}' not recognized"
     end
 
     it 'creates routes that map to focused controllers' do
@@ -27,6 +29,7 @@ module FocusedController
 
           resources :comments do
             resources :replies
+            get 'foo/:bar' => 'PostsController::Index', on: :collection
           end
 
           resource :account
@@ -45,7 +48,8 @@ module FocusedController
         [:put, '/comments/4']         => 'CommentsController::Update',
         [:get, '/account']            => 'AccountsController::Show',
         [:get, '/comments/4/replies'] => 'RepliesController::Index',
-        [:get, '/admin/comments']     => 'Admin::CommentsController::Index'
+        [:get, '/admin/comments']     => 'Admin::CommentsController::Index',
+        [:get, '/comments/foo/omg']   => 'PostsController::Index',
       }
 
       mappings.each do |(method, path), controller|
