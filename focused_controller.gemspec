@@ -18,7 +18,7 @@ Gem::Specification.new do |s|
   s.executables   = `git ls-files -- bin/*`.split("\n").map{ |f| File.basename(f) }
   s.require_paths = ["lib"]
 
-  s.add_dependency 'actionpack', '>= 3.0', '< 4.2'
+  s.add_dependency 'actionpack', '~> 4.0', '< 4.2'
 
   s.add_development_dependency 'minitest'
   s.add_development_dependency 'capybara',               '~> 2.1'
