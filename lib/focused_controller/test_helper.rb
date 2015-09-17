@@ -50,7 +50,9 @@ module FocusedController
 
       def include_routes
         if controller_class.respond_to?(:_routes) && controller_class._routes
-          include controller_class._routes.named_routes.module
+          if mod = controller_class._routes.url_helpers
+            include mod
+          end
         end
       end
     end

@@ -5,6 +5,17 @@ require "active_support/all"
 require "yaml"
 
 require "focused_controller"
+
+TEST_ROOT = File.expand_path('..', __FILE__)
+
+class RailsApplication < Rails::Application
+  config.root            = TEST_ROOT + "/app"
+  config.secret_key_base = "123"
+  config.secret_token    = "123"
+
+  config.active_support.test_order = :random
+end
+
 require "active_support/test_case"
 
 require "minitest/autorun"
@@ -21,12 +32,4 @@ RSpec.configure do |config|
 end
 [singleton_class, Module].each do |mod|
   mod.class_eval { alias describe minitest_describe }
-end
-
-TEST_ROOT = File.expand_path('..', __FILE__)
-
-class RailsApplication < Rails::Application
-  config.root            = TEST_ROOT + "/app"
-  config.secret_key_base = "123"
-  config.secret_token    = "123"
 end

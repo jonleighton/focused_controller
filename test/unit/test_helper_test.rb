@@ -23,13 +23,11 @@ module FocusedController
 
         def self._routes
           OpenStruct.new(
-            :named_routes => OpenStruct.new(
-              :module => Module.new do
-                def foo_path
-                  '/foo'
-                end
+            :url_helpers => Module.new do
+              def foo_path
+                '/foo'
               end
-            )
+            end
           )
         end
       end
@@ -37,13 +35,11 @@ module FocusedController
       class Show < Action
         def self._routes
           OpenStruct.new(
-            :named_routes => OpenStruct.new(
-              :module => Module.new do
-                def bar_path
-                  '/bar'
-                end
+            :url_helpers => Module.new do
+              def bar_path
+                '/bar'
               end
-            )
+            end
           )
         end
       end

@@ -4,6 +4,7 @@
 * Ruby 1.9 no longer officially supported (it may still work)
 * Isolated unit tests (via `stub_url`) no longer supported. Use the
   Spring preloader to keep your app warm instead.
+* Rails 4.2 support added
 
 ## Version 1.2.1 ##
 

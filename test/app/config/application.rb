@@ -9,6 +9,7 @@ module App
   class Application < Rails::Application
     # Configure the default encoding used in templates for Ruby 1.9.
     config.encoding = "utf-8"
+    config.active_support.test_order = :sorted
   end
 end
 I18n.enforce_available_locales = false
