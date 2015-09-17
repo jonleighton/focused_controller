@@ -61,7 +61,7 @@ module FocusedController
           action,
           FocusedController::RouteMapper.new(
             @scope,
-            options.merge(action: action)
+            { action: action }.merge(options)
           ).options
         )
       else

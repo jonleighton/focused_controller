@@ -29,7 +29,9 @@ module FocusedController
 
           resources :comments do
             resources :replies
-            get 'foo/:bar' => 'PostsController::Index', on: :collection
+
+            get 'a/:foo' => 'PostsController::Index', on: :collection
+            get 'b/:foo', action: :index, on: :collection
           end
 
           resource :account
@@ -49,7 +51,8 @@ module FocusedController
         [:get, '/account']            => 'AccountsController::Show',
         [:get, '/comments/4/replies'] => 'RepliesController::Index',
         [:get, '/admin/comments']     => 'Admin::CommentsController::Index',
-        [:get, '/comments/foo/omg']   => 'PostsController::Index',
+        [:get, '/comments/a/omg']     => 'PostsController::Index',
+        [:get, '/comments/b/omg']     => 'CommentsController::Index',
       }
 
       mappings.each do |(method, path), controller|
