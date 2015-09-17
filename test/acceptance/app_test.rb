@@ -1,4 +1,4 @@
-require 'helper'
+require_relative '../helper'
 require 'capybara'
 require 'capybara_minitest_spec'
 require 'capybara/poltergeist'
@@ -94,7 +94,7 @@ describe 'acceptance test' do
 
         yield
 
-        Process.kill('KILL', out.pid)
+        Process.kill('QUIT', File.read("tmp/pids/server.pid").to_i)
       end
     end
   end
