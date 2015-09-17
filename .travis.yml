@@ -4,7 +4,6 @@ rvm:
   - 2.2.3
   - 2.1.2
   - 2.0.0
-  - jruby-9.0.0.0
 
 gemfile:
   - gemfiles/rails_4_2.gemfile
