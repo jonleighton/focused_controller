@@ -1,6 +1,6 @@
 ## Next version (2.0.0) ##
 
-* Rails 3.X no longer supported
+* Rails 3.X and 4.0 no longer supported
 * Ruby 1.9 no longer officially supported (it may still work)
 
 ## Version 1.2.1 ##

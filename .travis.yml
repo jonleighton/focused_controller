@@ -8,6 +8,5 @@ rvm:
 
 gemfile:
   - gemfiles/rails_4_1.gemfile
-  - gemfiles/rails_4_0.gemfile
 
 sudo: false
