@@ -1,4 +1,4 @@
-require 'helper'
+require_relative '../helper'
 require 'action_controller'
 require 'focused_controller/rspec_helper'
 
@@ -21,13 +21,13 @@ module FocusedController
       end
     end
 
-    index_spec = RSpec::Core::ExampleGroup.describe FakePostsController::Index do
+    index_spec = RSpec.describe FakePostsController::Index do
       include FocusedController::RSpecHelper
     end
 
     show_spec = nil
     inner_show_spec = nil
-    RSpec::Core::ExampleGroup.describe FakePostsController do
+    RSpec.describe FakePostsController do
       show_spec = describe FakePostsController::Show do
         include FocusedController::RSpecHelper
 
@@ -36,7 +36,7 @@ module FocusedController
       end
     end
 
-    edit_spec = RSpec::Core::ExampleGroup.describe "the edit action" do
+    edit_spec = RSpec.describe "the edit action" do
       include FocusedController::RSpecHelper
       self.controller_class = FakePostsController::Edit
     end

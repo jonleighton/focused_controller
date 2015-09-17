@@ -103,7 +103,7 @@ describe 'acceptance test' do
     run_without_bundle_exec "bundle check >/dev/null || bundle update >/dev/null"
   end
 
-  let(:s) { Capybara::Session.new(:poltergeist, nil) }
+  let(:s) { Capybara::Session.new(:poltergeist) }
 
   it 'does basic CRUD actions successfully' do
     start_server do

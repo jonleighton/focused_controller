@@ -21,10 +21,10 @@ Gem::Specification.new do |s|
   s.add_dependency 'actionpack', '~> 4.1', '< 4.2'
 
   s.add_development_dependency 'minitest'
-  s.add_development_dependency 'capybara',               '~> 2.1'
+  s.add_development_dependency 'capybara',               '~> 2.5'
   s.add_development_dependency 'capybara_minitest_spec', '~> 1.0'
-  s.add_development_dependency 'poltergeist',            '~> 1.3'
-  s.add_development_dependency 'rspec',                  '~> 2.8'
-  s.add_development_dependency 'rspec-rails',            '~> 2.8'
+  s.add_development_dependency 'poltergeist',            '~> 1.6'
+  s.add_development_dependency 'rspec',                  '~> 3.0'
+  s.add_development_dependency 'rspec-rails',            '~> 3.0'
   s.add_development_dependency 'appraisal',              '~> 1.0'
 end

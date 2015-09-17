@@ -1,4 +1,4 @@
-require 'helper'
+require_relative '../helper'
 require 'action_controller'
 
 module FocusedController

@@ -1,4 +1,4 @@
-require 'helper'
+require_relative '../helper'
 require 'focused_controller/functional_test_helper'
 require 'action_controller'
 

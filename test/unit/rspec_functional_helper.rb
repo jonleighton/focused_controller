@@ -1,4 +1,4 @@
-require 'helper'
+require_relative '../helper'
 require 'focused_controller/rspec_functional_helper'
 
 module FocusedController

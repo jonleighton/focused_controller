@@ -103,8 +103,12 @@ module FocusedController
       controller.url_for(*args)
     end
 
+    def _routes_included?
+      defined?(@_routes_included) && @_routes_included
+    end
+
     def respond_to?(*args)
-      unless defined?(@_routes_included) && @_routes_included
+      unless _routes_included?
         self.class.include_routes
         @_routes_included = true
       end
@@ -113,7 +117,7 @@ module FocusedController
     end
 
     def method_missing(method_name, *args, &block)
-      if respond_to?(method_name)
+      if !_routes_included? && respond_to?(method_name)
         send(method_name, *args, &block)
       else
         super

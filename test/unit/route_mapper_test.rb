@@ -1,4 +1,4 @@
-require 'helper'
+require_relative '../helper'
 
 # RouteSet is missing some requires
 require 'active_support/core_ext/uri'
