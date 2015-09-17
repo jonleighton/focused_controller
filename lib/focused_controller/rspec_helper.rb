@@ -18,7 +18,7 @@ module FocusedController
         # This must get included higher in the ancestor chain than
         # this module so that inheritance works as desired
         include FocusedController::TestHelper
-        extend ClassMethods
+        extend FocusedController::RSpecControllerClass
         subject { controller }
       end
 
@@ -31,14 +31,6 @@ module FocusedController
       include RSpec::Rails::Matchers
       include RSpec::Rails::Matchers::RedirectTo
       include RSpec::Rails::Matchers::RenderTemplate
-    end
-
-    module ClassMethods
-      include FocusedController::RSpecControllerClass
-
-      def stub_url(*helper_names)
-        before { stub_url(*helper_names) }
-      end
     end
   end
 end

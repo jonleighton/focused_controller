@@ -144,19 +144,11 @@ describe 'acceptance test' do
     run_command "ruby -Itest test/unit/controllers/posts_controller_test.rb"
   end
 
-  it 'runs an isolated unit test' do
-    run_command "ruby -Itest test/unit/controllers/posts_controller_isolated_test.rb"
-  end
-
   it 'runs a functional spec' do
     run_command "rspec spec/controllers/posts_controller_spec.rb"
   end
 
   it 'runs a unit spec' do
     run_command "rspec spec/unit/controllers/posts_controller_spec.rb"
-  end
-
-  it 'runs an isolated unit spec' do
-    run_command "rspec spec/unit/controllers/posts_controller_isolated_spec.rb"
   end
 end

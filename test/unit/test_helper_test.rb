@@ -178,38 +178,6 @@ module FocusedController
 
         subject.cookies[:foo].must_equal 'omg'
       end
-
-      describe 'url stubbing' do
-        before do
-          subject.stub_url :foo, :bar
-        end
-
-        it 'handles equality' do
-          foo, bar = Object.new, Object.new
-          StubbedURL.new(:foo_path, [foo]).must_equal StubbedURL.new(:foo_path, [foo])
-          StubbedURL.new(:foo_path, [foo, bar]).wont_equal StubbedURL.new(:foo_path, [foo])
-          StubbedURL.new(:foo_path, [bar]).wont_equal StubbedURL.new(:foo_path, [foo])
-          StubbedURL.new(:bar_path, [foo]).wont_equal StubbedURL.new(:foo_path, [foo])
-        end
-
-        it 'has a to_s' do
-          StubbedURL.new(:foo_path, ['omg', 'lol']).to_s.must_equal "foo_path(omg, lol)"
-        end
-
-        it 'creates a stub method on the test and controller instances' do
-          foo = Object.new
-          subject.foo_path(foo).must_equal StubbedURL.new(:foo_path, [foo])
-          subject.controller.foo_path(foo).must_equal StubbedURL.new(:foo_path, [foo])
-          subject.foo_url(foo).must_equal StubbedURL.new(:foo_url, [foo])
-          subject.controller.foo_url(foo).must_equal StubbedURL.new(:foo_url, [foo])
-        end
-
-        it 'works with a controller' do
-          foo = Object.new
-          subject.controller.redirect_to StubbedURL.new(:foo_path, [foo])
-          must_succeed { subject.assert_redirected_to StubbedURL.new(:foo_path, [foo]) }
-        end
-      end
     end
   end
 end

@@ -241,34 +241,6 @@ describe UsersController do
 end
 ```
 
-## Isolated unit tests ##
-
-It is possible to completely decouple your focused controller tests from the
-Rails application. This means you don't have to pay the penalty of starting up
-Rails every time you want to run a test. This is an advanced feature and your
-mileage may vary. The benefit this brings will depend on how coupled your
-controllers/tests are to other dependencies.
-
-Your `config/routes.rb` file is a dependency. When you use a URL helper
-you are depending on that file. As this is a common dependency, Focused
-Controller provides a way to stub out URL helpers:
-
-``` ruby
-module UsersController
-  class CreateTest < ActiveSupport::TestCase
-    include FocusedController::TestHelper
-    stub_url :user
-
-    # ...
-  end
-end
-```
-
-The `stub_url` declaration will make the `user_path` and `user_url`
-methods in your test and your controller return stub objects. These can
-be compared, so `user_path(user1) == user_path(user1)`, but
-`user_path(user1) != user_path(user2)`.
-
 ## More examples ##
 
 The [acceptance
