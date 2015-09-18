@@ -24,8 +24,9 @@ module FocusedController
     it 'creates routes that map to focused controllers' do
       route_set.draw do
         focused_controller_routes do
-          get 'posts'     => 'PostsController::Index'
-          get 'posts/all' => 'posts#index'
+          get 'posts'      => 'PostsController::Index'
+          get 'posts/all'  => 'posts#index'
+          get 'posts/all2' => 'PostsController::Index'
 
           resources :comments do
             resources :replies
@@ -55,6 +56,7 @@ module FocusedController
         [:get, '/comments/a/omg']     => 'PostsController::Index',
         [:get, '/comments/b/omg']     => 'CommentsController::Index',
         [:get, '/admin/foo']          => 'Admin::FooController::Show',
+        [:get, '/posts/all2']         => 'PostsController::Index',
       }
 
       mappings.each do |(method, path), controller|

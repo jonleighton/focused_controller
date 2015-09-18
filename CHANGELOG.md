@@ -1,3 +1,7 @@
+## 2.0.1 ##
+
+* Routing bug fix
+
 ## 2.0.0 ##
 
 * Rails 3.X and 4.0 no longer supported

@@ -25,14 +25,14 @@ module FocusedController
     private
 
     def to_option
-      if @options[:to] && !@options[:to].respond_to?(:call)
+      if @options[:controller]
+        @options[:controller]
+      elsif @options[:to] && !@options[:to].respond_to?(:call)
         if @options[:to].include?('#')
           stringify_controller_and_action(*@options[:to].split('#'))
         else
           @options[:to]
         end
-      elsif @options[:controller]
-        @options[:controller]
       elsif @options[:action] && @scope[:controller]
         stringify_controller_and_action(@scope[:controller], @options[:action])
       end
