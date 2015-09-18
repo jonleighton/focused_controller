@@ -38,6 +38,7 @@ module FocusedController
 
           namespace :admin do
             resources :comments
+            get 'foo' => 'FooController::Show'
           end
         end
       end
@@ -53,6 +54,7 @@ module FocusedController
         [:get, '/admin/comments']     => 'Admin::CommentsController::Index',
         [:get, '/comments/a/omg']     => 'PostsController::Index',
         [:get, '/comments/b/omg']     => 'CommentsController::Index',
+        [:get, '/admin/foo']          => 'Admin::FooController::Show',
       }
 
       mappings.each do |(method, path), controller|
