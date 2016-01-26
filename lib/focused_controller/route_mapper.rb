@@ -77,7 +77,7 @@ module FocusedController
 
     def controller_reference(controller_param)
       if controller_param.include?(FOCUSED_CONTROLLER)
-        const_name = @controller_class_names[controller_param] ||= controller_param.camelize
+        const_name = controller_param.camelize
         ActiveSupport::Dependencies.constantize(const_name)
       else
         super
