@@ -1,3 +1,7 @@
+## 2.0.2 ##
+
+* Rails 4.2.5.1 compatibility fix
+
 ## 2.0.1 ##
 
 * Routing bug fix
