@@ -1,3 +1,7 @@
+## 2.0.3 ##
+
+* Fix RSpec 3 deprecation warning
+
 ## 2.0.2 ##
 
 * Rails 4.2.5.1 compatibility fix

@@ -24,6 +24,8 @@ end
 require "rspec/core"
 RSpec.configure do |config|
   config.expose_dsl_globally = false
+  config.raise_errors_for_deprecations!
+  config.expect_with(:rspec) { |c| c.syntax = :should }
 end
 [singleton_class, Module].each do |mod|
   mod.class_eval { alias describe minitest_describe }
